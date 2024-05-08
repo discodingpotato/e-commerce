@@ -1,0 +1,26 @@
+<% const items=['', 'categories' , 'products', 'users' ]; %>
+<% const itemSvg = ['<svg class="w-6 h-6" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"> <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"> </path> </svg>','<svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11H4m15.5 5a.5.5 0 0 0 .5-.5V8a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44l-1.436-2.12a1 1 0 0 0-.828-.44H8a1 1 0 0 0-1 1M4 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44L9.985 8.44A1 1 0 0 0 9.157 8H5a1 1 0 0 0-1 1Z"/> </svg>', '<svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/></svg>', '<svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"> <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/> </svg>'] %>
+    <aside class="z-20 hidden w-64 overflow-y-auto bg-neutral-900/65 md:block flex-shrink-0">
+        <div class="py-4 text-gray-400">
+            <a class="ml-6 text-lg font-bold text-gray-200" href="#">
+                Windmill
+            </a>
+            <ul class="mt-6 space-y-2">
+                <% items.forEach(function(item, index) { %>
+                    <% const isActive = currentPath.slice(1) === item %>
+                    <li class="relative px-6 py-3 rounded-r-full space-x-2">
+                        <% if(isActive) { %>
+                        <span class="absolute inset-y-0 left-0 w-1 bg-white rounded-tr-lg rounded-lg"
+                            aria-hidden="true"></span>
+                        <% } %>
+                        <a class="inline-flex items-center w-full text-base font-semibold <%= isActive ? 'text-gray-100' : 'hover:text-gray-200' %> transition-colors duration-150"
+                            href="<%= '/admin/dashboard/' + item %>">
+                            <%- itemSvg[index] %>
+                            <span class="ml-4"><%= item != '' ? item.charAt(0).toUpperCase() + item.slice(1) : 'Dashboard' %></span>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+
+        </div>
+    </aside>

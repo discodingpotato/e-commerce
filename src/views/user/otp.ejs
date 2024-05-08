@@ -1,0 +1,170 @@
+<%- include('../layout/header') %>
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 text-black sm:py-12">
+        <div class="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl top-[-10rem]" aria-hidden="true">
+            <div class="relative -z-10 flex aspect-[1155/678] h-screen w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] items-center justify-center bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-50 left-1/2 sm:w-[72.1875rem]"
+                style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+        </div>
+        <div
+            class="relative bg-white px-6 pb-8 pt-10 shadow-xl sm:mx-auto sm:min-w-[35rem] sm:max-w-2xl sm:rounded-lg sm:px-10">
+            <div class="mx-auto flex max-w-lg flex-col items-center">
+                <p class="text-2xl font-bold">Verification</p>
+                <p class="text-base font-semibold text-gray-700 items-center flex flex-col">We've sent a verification
+                    code to your email <br><span class="font-bold select-none"><%= userEmail %></span></p>
+                <% if (messages.otpError) { %>
+                    <span class="text-red-500 font-semibold"><%= messages.otpError %></span>
+                <% } %>
+                <% if (messages.pendingVerification) { %>
+                    <span class="text-green-600 font-semibold"><%= messages.pendingVerification %></span>
+                <% } %>
+            </div>
+            <!-- Forum, POST Request -->
+            <form action="/otp" method="post" id="otpForm">
+                <div class="flex flex-col space-y-4">
+                    <input type="hidden" value="" name="otp" id="otp">
+                    <div class="mx-auto flex w-full max-w-72 flex-row items-center justify-between space-x-5">
+                        <!-- <div class=""> -->
+                            <input
+                                class="otpinput flex h-16 w-16 flex-col items-center justify-center rounded-xl bg-slate-100 px-5 text-center text-lg font-bold outline-none ring-blue-700 focus:bg-slate-100 focus:ring-2"
+                                type="text" id="otp1" maxlength="1" value="" autofocus/>
+                        <!-- </div> -->
+                        <!-- <div class="h-16 w-16"> -->
+                            <input
+                                class="otpinput flex h-16 w-16 flex-col items-center justify-center rounded-xl bg-slate-100 px-5 text-center text-lg font-bold outline-none ring-blue-700 focus:bg-slate-100 focus:ring-2"
+                                type="text" id="otp2" maxlength="1" value="" />
+                        <!-- </div> -->
+                        <!-- <div class="h-16 w-16"> -->
+                            <input
+                                class="otpinput flex h-16 w-16 flex-col items-center justify-center rounded-xl bg-slate-100 px-5 text-center text-lg font-bold outline-none ring-blue-700 focus:bg-slate-100 focus:ring-2"
+                                type="text" id="otp3" maxlength="1" value="" />
+                        <!-- </div> -->
+                        <!-- <div class="h-16 w-16"> -->
+                            <input
+                                class="otpinput flex h-16 w-16 flex-col items-center justify-center rounded-xl bg-slate-100 px-5 text-center text-lg font-bold outline-none ring-blue-700 focus:bg-slate-100 focus:ring-2"
+                                type="text" id="otp4" maxlength="1" value="" />
+                        <!-- </div> -->
+                    </div>
+                    <div class="flex flex-col space-y-5 pt-1">
+                        <div  id="timerDiv" class="flex flex-row items-center justify-center space-x-1 text-center text-base font-medium text-black">
+                            <p>Resend OTP in </p>
+                            <span id="timerContent">00:00</span>
+                        </div>
+                        <div id="resendOTPDiv" class="hidden flex-row items-center justify-center space-x-1 text-center text-base font-medium text-black">
+                            <p>Didn't recieve the code? </p>
+                            <span class="text-blue-500 hover:underline cursor-pointer" id="resendOTP">Resend</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let timerDiv = document.getElementById('timerDiv');
+            let resendOTPDiv = document.getElementById('resendOTPDiv');
+            let spanTimer = document.querySelector('#timerDiv span');
+            var timer = 25, startTime;
+
+            // Trigger
+            function triggerTimer() {
+                if (localStorage.getItem('timerStartTime')) {
+                    var elapsedTime = Date.now() - localStorage.getItem('timerStartTime');
+                    timer = Math.max(timer - Math.floor(elapsedTime / 1000), 0);
+                } else {
+                    localStorage.setItem('timerStartTime', Date.now());
+                }
+
+                var interval = setInterval(function () {
+                    timer--;
+                    var minutes = Math.floor(timer / 60);
+                    var seconds = timer % 60;
+                    if (seconds < 10) {
+                        seconds = '0' + seconds;
+                    }
+                    spanTimer.textContent = minutes + ':' + seconds;
+                    if (timer <= 0) {
+                        clearInterval(interval);
+                        timerDiv.classList.replace('flex', 'hidden');
+                        resendOTPDiv.classList.replace('hidden', 'flex')
+                        // localStorage.removeItem('timerStartTime');
+                    }
+                }, 1000);
+            }
+            
+            triggerTimer();
+            
+            document.getElementById('resendOTP').addEventListener('click', function (e) {
+                $.ajax({
+                    type: "get",
+                    url: "/resend-otp",
+                    success: function (response) {
+                        timer = 25;
+                        localStorage.setItem('timerStartTime', Date.now());
+                        timerDiv.classList.replace('hidden', 'flex');
+                        resendOTPDiv.classList.replace('flex', 'hidden')
+                        triggerTimer();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Done',
+                            text: 'Check your email for new OTP',
+                            timer: 1200,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            
+            
+            $(".otpinput").keyup(function (e) {
+                console.log('lol')
+                if (this.value.length == 1) {
+                    console.log('mew');
+                    console.log($(this).siblings())
+                    $(this).next('.otpinput').focus();
+                    checkFilled()
+                }
+            });
+
+            $(".otpinput").keydown(function (e) {
+                if (e.which === 8 && this.value.length === 0) {
+                    $(this).prev('.otpinput').focus();
+                }
+            });
+
+            function checkFilled() {
+                var filled = true;
+                $(".otpinput").each(function () {
+                    console.log('val: ', $(this).val().length);
+                    console.log($(this).attr('maxlength'))
+                    if ($(this).val().length != 1) {
+                        filled = false;
+                        console.log('noki iri', filled)
+                    }
+                });
+                if (filled) {
+                    console.log('nono');
+                    submitForm(); // Submit the form
+                }
+            }
+
+            // Function to submit the form
+            function submitForm() {
+                // Get OTP value
+                localStorage.removeItem('timerStartTime');
+                console.log('haha');
+                var otp = $("#otp1").val() + $("#otp2").val() + $("#otp3").val() + $("#otp4").val();
+
+                // Set the value of the hidden field
+                $("#otp").val(otp);
+                // Submit the form
+                $("#otpForm").submit();
+            }
+
+        });
+    </script>
+<%- include('../layout/footer') %>

@@ -1,0 +1,270 @@
+<%- include('../layout/header') %>
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 text-black sm:py-12">
+        <div class="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl top-[-10rem]" aria-hidden="true">
+            <div class="relative -z-10 flex aspect-[1155/678] h-screen w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] items-center justify-center bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-50 left-1/2 sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+        </div>
+        <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:min-w-[35rem]">
+            <div class="mx-auto max-w-md flex items-center flex-col">
+                <h3 class="font-bold text-2xl">Create an account</h3>
+            </div>
+            <!-- Forum, POST Request -->
+            <form action="/signup" method="post" id="signUpForm">
+                <!-- Name / Username -->
+                <div class="mt-4">
+                    <label for="nameInput" class="block text-sm font-medium mb-1">Name
+                        <span class="text-red-500"> *</span>
+                    </label>
+                    <div class="relative mb-4 font-medium">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+                            <svg class="flex-shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </div>
+                        <input type="text" id="nameInput" class="outline-none border-none text-sm rounded-lg block w-full ps-10 p-2.5 bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700" required name="displayName" value="<%= messages.forumData ? messages.forumData.email : '' %>" placeholder="Enter name">
+                    </div>
+                </div>
+                <!-- Email -->
+                <div class="mt-2">
+                    <label for="emailInput" class="block text-sm font-medium mb-1">
+                        Email
+                        <span class="text-red-500 italic" id="emailError">
+                            <% if (messages.emailError) { %>
+                             - <%= messages.emailError %>
+                            <% } else { %>
+                             * 
+                            <% } %>
+                        </span>
+                    </label>
+                    <div class="relative mb-6 font-medium">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+                            <svg class="size-5 flex-shrink-0 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16v-5.5C11 8.5 9.4 7 7.5 7m3.5 9H4v-5.5C4 8.5 5.6 7 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1" />
+                            </svg>
+                        </div>
+                        <input type="email" id="emailInput" class="border-none outline-none text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700" required name="email" placeholder="Enter email" value="">
+                    </div>
+                </div>
+                <!-- Phone NO -->
+                <div class="mt-2">
+                    <label for="phoneNumberInput" class="block text-sm font-medium mb-1">
+                        Phone No.
+                        <span class="text-red-500"> *</span>
+                    </label>
+                    <div class="relative mb-6 font-medium">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+                            <svg class="size-5 flex-shrink-0 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m18.4 14.8-1.2-1.3a1.7 1.7 0 0 0-2.4 0l-.7.7a1.7 1.7 0 0 1-2.4 0l-1.9-1.9a1.7 1.7 0 0 1 0-2.4l.7-.6a1.7 1.7 0 0 0 0-2.5L9.2 5.6a1.6 1.6 0 0 0-2.4 0c-3.2 3.2-1.7 6.9 1.5 10 3.2 3.3 7 4.8 10.1 1.6a1.6 1.6 0 0 0 0-2.4Z" />
+                            </svg>
+                        </div>
+                        <input type="tel" id="phoneNumberInput" minlength="10" maxlength="10" class="border-none outline-none text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700" required name="phoneno" placeholder="Enter phone no." value="">
+                    </div>
+                </div>
+                <!-- Password -->
+                <div class="mt-2">
+                    <label for="passwordInput" class="block text-sm font-medium mb-1">
+                        Password
+                        <span class="text-red-500 italic" id="passwordSpan"> *</span>
+                    </label>
+                    <div class="relative mb-6 font-medium">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+                            <svg class="flex-shrink-0 size-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z" />
+                                <circle cx="16.5" cy="7.5" r=".5" />
+                            </svg>
+                        </div>
+                        <input type="password" id="passwordInput" class="border-none outline-none text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700" required name="password" placeholder="Enter password" value="">
+                        <button type="button" class="absolute top-0 end-0 p-3.5 rounded-e-md" id="showPasswordButton">
+                            <svg id="showPasswordSVG" class="hidden flex-shrink-0 size-3.5 text-gray-700 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <svg id="hidePasswordSVG" class="block flex-shrink-0 size-3.5 text-gray-700 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                <line x1="2" x2="22" y1="2" y2="22"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Confirm Passoword -->
+                <div class="mt-2">
+                    <label for="confirmPasswordInput" class="block text-sm font-medium mb-1">
+                        Confirm Password
+                        <span class="text-red-500 italic" id="confirmPasswordSpan"> *</span>
+                    </label>
+                    <div class="relative mb-6 font-medium">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+                            <svg class="flex-shrink-0 size-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z" />
+                                <circle cx="16.5" cy="7.5" r=".5" />
+                            </svg>
+                        </div>
+                        <input type="password" id="confirmPasswordInput" class="border-none outline-none text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700" required placeholder="Enter confirm password" value="">
+                    </div>
+                </div>
+                <!-- Referal Code -->
+                <div class="mt-2">
+                    <label for="referalCode" class="block text-sm font-medium mb-1">
+                        Referal Code (optional)
+                    </label>
+                    <div class="relative mb-6 font-medium">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+                            <svg class="flex-shrink-0 size-5 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4" />
+                            </svg>
+
+
+                        </div>
+                        <input type="text" id="referalCode" class="border-none outline-none text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700" name="referal" placeholder="Enter referal code" value="">
+                    </div>
+                </div>
+                <!-- Register Button -->
+                <button type="submit" class="text-white w-full font-medium rounded-lg text-sm px-5 py-2.5 me-2 bg-blue-600 hover:bg-blue-700 outline-none">Register</button>
+                <!-- TOS and Privacy Policy -->
+                <span class="ms-3 text-xs text-gray-900p">
+                    By registering this, You agree to our
+                    <a href="/tos" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-medium">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-medium">Privacy Policy</a>
+                </span>
+            </form>
+            <!-- Login / SignIn -->
+            <a href="/signin" class="text-blue-600 font-semibold text-sm">Already have an account?</a>
+    </div>
+    <script>
+        // Input Fields
+        let emailInput = document.getElementById("emailInput");
+        let passwordInput = document.getElementById("passwordInput");
+        let confirmPasswordInput = document.getElementById("confirmPasswordInput");
+        let phoneNumberInput = document.getElementById("phoneNumberInput");
+        // Span (Shows red warning)
+        let passwordSpan = document.getElementById("passwordSpan")
+        let confirmPasswordSpan = document.getElementById("confirmPasswordSpan");
+        // Button
+        let showPasswordButton = document.getElementById("showPasswordButton");
+        // SVG Field
+        let hidePasswordSVG = document.getElementById('hidePasswordSVG')
+        let showPasswordSVG = document.getElementById('showPasswordSVG')
+        // Prevent non-numerical values added to phone number field
+        phoneNumberInput.addEventListener('input', function (event) { 
+            this.value = this.value.replace(/\D/g, '');
+        });
+        // Passowrd validation
+        passwordInput.addEventListener('input', (event) => {
+                // 
+                // Password should contain atleast one special charector
+                // 
+                if (!/[!@#$%^&*(),.?":{}|<>]/.test(passwordInput.value)) {
+                    // Adding / removing color
+                    passwordSpan.classList.add('text-red-500');
+                    passwordSpan.classList.remove('text-green-500');
+                    // Message
+                    passwordSpan.innerHTML = 'Required atleast one symbol';
+                } else
+                // 
+                // Capital letters?
+                // 
+                if(!/[A-Z]/.test(passwordInput.value)) {
+                    // Red Color
+                    passwordSpan.classList.add('text-red-500');
+                    passwordSpan.classList.remove('text-green-500');
+                    // Message
+                    passwordSpan.innerHTML = 'Atleast one capital letter';
+                } else
+                // 
+                // Password should contain atleast one numerical value
+                // 
+                if (!/\d/.test(passwordInput.value)) {
+                    // Red Color
+                    passwordSpan.classList.add('text-red-500');
+                    passwordSpan.classList.remove('text-green-500');
+                    // Message
+                    passwordSpan.innerHTML = 'Required atleast one number';
+                } else
+                // 
+                // Password Length
+                // 
+                if(passwordInput.value.length < 8) {
+                    // Red Color
+                    passwordSpan.classList.add('text-red-500');
+                    passwordSpan.classList.remove('text-green-500');
+                    // Message
+                    passwordSpan.innerHTML = 'Should meet atleast 8 length';
+                }
+                // 
+                // All set? Pass
+                // 
+                else {
+                    // Color change
+                    passwordSpan.classList.remove('text-red-500');
+                    passwordSpan.classList.add('text-green-500');
+                    // Message
+                    passwordSpan.innerHTML = 'All set';
+                }
+            });
+            // Password field blur / out of focus
+            passwordInput.addEventListener('blur', function (event) { 
+                passwordSpan.innerHTML = "*";
+                passwordSpan.classList.replace('text-green-500', 'text-red-500')
+            });
+            // Validate confirm password field content is matching with password field content
+            confirmPasswordInput.addEventListener('input', function (event) {
+                if(confirmPasswordInput.value === passwordInput.value) {
+                    confirmPasswordSpan.classList.replace('text-red-500', 'text-green-500');
+                    confirmPasswordSpan.innerHTML = 'Correct';
+                } else {
+                    confirmPasswordSpan.classList.add('text-red-500');
+                    confirmPasswordSpan.classList.remove('text-green-500');
+                    confirmPasswordSpan.innerHTML = 'Not matching!';
+                }
+            });
+            // confirm Password field blur / out of focus
+            confirmPasswordInput.addEventListener('blur', function (event) { 
+                confirmPasswordSpan.innerHTML = "*";
+                confirmPasswordSpan.classList.replace('text-green-500', 'text-red-500')
+            });
+            // Show & Hide password
+            showPasswordButton.addEventListener('click', function (event) {
+                if (passwordInput.type == 'text') {
+                    passwordInput.type = 'password'
+                    confirmPasswordInput.type = 'password';
+                    showPasswordSVG.classList.replace('block', 'hidden')
+                    hidePasswordSVG.classList.replace('hidden', 'block')
+                } else {
+                    passwordInput.type = 'text';
+                    confirmPasswordInput.type = 'text';
+                    showPasswordSVG.classList.replace('hidden', 'block')
+                    hidePasswordSVG.classList.replace('block', 'hidden')
+                }
+            })
+            // Handle document submission
+            document.getElementById('signUpForm').addEventListener('submit', function () {
+                // Is valid? Ahrm
+                let isValid = true;
+                // Email format?
+                // Basically, even the email input field is set to required, it's only requires a letter after @, not the entire format 
+                // Using regex of email (user@host), we can prevent this issue 
+                if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                    EmailSpan.innerHTML = `<i> - Invalid format</i>`
+                    isValid = false;
+                }
+                // password recheck
+                // Even the password is checked on the previous event, It shows just a warning
+                // We need to make sure that password contains required values
+                if (!passwordInput.value.match(/[!@#$%^&*(),.?":{}|<>]/) || !passwordInput.value.match(/\d/)) {
+                    PasswordSpan.innerHTML = `Passowrd didn't meet the requirements`;
+                    isValid = false;
+                }
+                // Confirm password content verification
+                if(passwordInput.value != confirmPasswordInput.value) {
+                    confirmPasswordSpan.innerText = 'Not matching!'
+                    isValid = false;
+                }
+                // Prevents form being submitted
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+
+    </script>
+<%- include('../layout/footer') %>

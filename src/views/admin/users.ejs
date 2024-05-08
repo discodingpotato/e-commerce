@@ -1,0 +1,241 @@
+<%- include("../layout/adminHeader") %>
+    <div class="flex h-screen bg-neutral-950" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <%- include("../components/admin/desktopSidebar") %>
+            <%- include("../components/admin/mobileSidebar") %>
+                <div class="flex flex-col flex-1 w-full">
+                    <%- include("../components/admin/desktopTopNavbar") %>
+                        <main class="h-full overflow-y-auto justify-center items-center flex font-quicksand">
+                            <div class="container px-6 mx-auto grid">
+                                <div class="mb-4 text-gray-300 flex justify-between">
+                                    <div>
+                                        <h4 class="text-2xl font-semibold">
+                                            Users
+                                        </h4>
+                                        <h6 class="text-sm font-medium">
+                                            Contains user's display name, email, mobile no. and current status of the
+                                            account + you can block/unblock the user
+                                        </h6>
+                                    </div>
+                                    <!-- Search Bar [ON DEVELOPMENT] -->
+                                    <!-- <div class="max-w-sm">
+                                        <div class="relative">
+                                          <div class="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-3.5">
+                                            <svg class="size-4 flex-shrink-0 text-white/60" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                              <circle cx="11" cy="11" r="8"></circle>
+                                              <path d="m21 21-4.3-4.3"></path>
+                                            </svg>
+                                          </div>
+                                          <input class="block w-full rounded-lg py-3 pe-4 ps-10 text-sm text-neutral-400 placeholder-neutral-500 focus:border-blue-500 disabled:pointer-events-none disabled:opacity-50 border-neutral-700 bg-neutral-900 focus:ring-neutral-600" type="text" placeholder="Type a name" value=""/>
+                                        </div>
+                                      </div>-->
+                                </div>
+                                <div class="w-full overflow-hidden rounded-lg shadow-xs bg-neutral-900">
+                                    <div class="w-full overflow-x-auto">
+                                        <table class="w-full whitespace-no-wrap">
+                                            <thead>
+                                                <tr
+                                                    class="text-xs font-semibold tracking-wide text-left border-b border-gray-700 text-gray-400">
+                                                    <th class="px-4 py-3">Sl.No</th>
+                                                    <th class="px-4 py-3">Display Name</th>
+                                                    <th class="px-4 py-3">Email</th>
+                                                    <th class="px-4 py-3">Phone No.</th>
+                                                    <th class="px-4 py-3">Status</th>
+                                                    <th class="px-4 py-3">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-700">
+                                                <% usersData.forEach((userData, index) => { %>
+                                                    <tr class="text-gray-400">
+                                                        <td class="px-4 py-3 text-sm">
+                                                            <%= index + 1 %>
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <div class="flex items-center text-sm">
+                                                                <!-- Avatar with inset shadow -->
+                                                                <!-- <div
+                                                                    class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                                                    <img class="object-cover w-full h-full rounded-full"
+                                                                        src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                                        alt="" loading="lazy" />
+                                                                    <div class="absolute inset-0 rounded-full shadow-inner"
+                                                                    aria-hidden="true"></div>
+                                                                </div> -->
+                                                                <div>
+                                                                    <p class="font-semibold">
+                                                                        <%= userData.displayName %>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="px-4 py-3 text-sm">
+                                                            <%= userData.email %>
+                                                        </td>
+                                                        <td class="px-4 py-3 text-sm">
+                                                            <%= userData.phoneno %>
+                                                        </td>
+                                                        <% if (userData.isBlocked) { %>
+                                                            <td class="px-4 py-3 text-xs">
+                                                                <span class="px-2 py-1 font-semibold leading-tight rounded-full bg-red-700/50 text-red-100">
+                                                                    Blocked
+                                                                </span>
+                                                            </td>
+                                                        <% } %>
+                                                        <% if (userData.isVerified && !userData.isBlocked) { %>
+                                                            <td class="px-4 py-3 text-xs">
+                                                                <span class="px-2 py-1 font-semibold leading-tight rounded-full bg-green-700/50 text-green-100">
+                                                                    Verified
+                                                                </span>
+                                                            </td>
+                                                        <% } %>
+                                                        <% if (!userData.isVerified && !userData.isBlocked) { %>
+                                                            <td class="px-4 py-3 text-xs">
+                                                                <span class="px-2 py-1 font-semibold leading-tight rounded-full bg-gray-700/50 text-gray-100">
+                                                                    Not-Verified
+                                                                </span>
+                                                            </td>
+                                                        <% } %>
+                                                        <td class="px-4 py-3">
+                                                            <div class="flex items-center space-x-4 text-sm">
+                                                                <button data-tooltip-target="tooltipAction<%= index %>" id="<%= userData._id %>" onclick="takeAction(this.id, '<%= userData.isBlocked %>')" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Block">
+                                                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="<%= userData.isBlocked ? 2 : 3 %>" stroke="currentColor" class="w-5 h-5">
+                                                                        <% if (userData.isBlocked) { %>
+                                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.63604 18.364C9.15076 21.8787 14.8492 21.8787 18.364 18.364C21.8787 14.8492 21.8787 9.15076 18.364 5.63604C14.8492 2.12132 9.15076 2.12132 5.63604 5.63604C2.12132 9.15076 2.12132 14.8492 5.63604 18.364ZM7.80749 17.6067C10.5493 19.6623 14.4562 19.4433 16.9497 16.9497C19.4433 14.4562 19.6623 10.5493 17.6067 7.80749L14.8284 10.5858C14.4379 10.9763 13.8047 10.9763 13.4142 10.5858C13.0237 10.1953 13.0237 9.5621 13.4142 9.17157L16.1925 6.39327C13.4507 4.33767 9.54384 4.55666 7.05025 7.05025C4.55666 9.54384 4.33767 13.4507 6.39327 16.1925L9.17157 13.4142C9.5621 13.0237 10.1953 13.0237 10.5858 13.4142C10.9763 13.8047 10.9763 14.4379 10.5858 14.8284L7.80749 17.6067Z" fill="#000000"/>
+                                                                        <% } else { %>
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                                                                        <% } %> 
+                                                                    </svg>
+                                                                </button>
+                                                                <!-- Tooltip -->
+                                                                <div id="tooltipAction<%= index %>" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-neutral-700 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                    <%= userData.isBlocked ? 'Unblock' : 'Block' %>
+                                                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- Pagination? -->
+                                    <!-- <div class="flex px-4 py-3 text-xs font-semibold tracking-wide uppercase border-t border-gray-700 sm:grid-cols-9 text-gray-400 justify-between">
+                                        <span class="flex items-center col-span-3">
+                                            Showing 21-30 of 100
+                                        </span>
+                                        <span class="col-span-2"></span>
+                                        <span class="flex col-span-4 sm:mt-auto sm:justify-end">
+                                            <nav aria-label="Table navigation">
+                                                <ul class="inline-flex items-center">
+                                                    <li>
+                                                        <button
+                                                            class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                                                            aria-label="Previous">
+                                                            <svg class="w-4 h-4 fill-current" aria-hidden="true"
+                                                                viewBox="0 0 20 20">
+                                                                <path
+                                                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                                            1
+                                                        </button>
+
+                                                    </li>
+
+                                                    <li>
+                                                        <button
+                                                            class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
+                                                            2
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+                                                            aria-label="Next">
+                                                            <svg class="w-4 h-4 fill-current" aria-hidden="true"
+                                                                viewBox="0 0 20 20">
+                                                                <path
+                                                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </span>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </main>
+                </div>
+    </div>
+    <script>
+        const swalCustomButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800",
+                cancelButton: "focus:outline-none text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2",
+                text: 'text-white'
+            },
+            buttonsStyling: false
+        });
+        function takeAction(userId, isBlocked) {
+            console.log(userId, isBlocked);
+            let isBlockedBool = isBlocked === 'true'
+            if(!isBlockedBool) {
+                swalCustomButtons.fire({
+                    title: "Are you sure?",
+                    text: "Are you sure that you want to block this user?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, block!",
+                    cancelButtonText: "No",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: `/admin/dashboard/users/${userId}`,
+                            // data: "data",
+                            // dataType: "dataType",
+                            success: function (response) {
+                                location.reload()
+                            }
+                        });
+                    } 
+                    // else if (result.dismiss === Swal.DismissReason.cancel) {
+                        
+                    // }
+                });
+            } else {
+                swalCustomButtons.fire({
+                    title: "Are you sure?",
+                    text: "Are you sure that you want to unblock this user?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, unblock!",
+                    cancelButtonText: "No",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "PATCH",
+                            url: `/admin/dashboard/users/${userId}/unblock`,
+                            // data: "data",
+                            // dataType: "dataType",
+                            success: function (response) {
+                                location.reload()
+                            }
+                        });
+                    } 
+                    // else if (result.dismiss === Swal.DismissReason.cancel) {
+                        
+                    // }
+                });
+            }
+        } 
+    </script>
+    <%- include("../layout/footer") %>
