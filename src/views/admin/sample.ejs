@@ -1,0 +1,22 @@
+<%- include("../layout/header") %>
+<button id="nah" type="button"> Buhaha </button>
+<script>
+    $(document).ready(function () {
+        $("#nah").click(function (e) { 
+            e.preventDefault();
+            console.log("mwuhehe");
+            $.ajax({
+                type: "PUT",
+                url: "/admin/sample",
+                data: JSON.stringify({mew: "keke"}),
+                contentType: "application/json",
+                // dataType: "json",
+                success: function (response) {
+                    // if(response.ok)
+                    location.reload()
+                }
+            });
+        });
+    });
+</script>
+<%- include("../layout/footer") %>
