@@ -1,7 +1,8 @@
 const express = require('express');
 const { Schema, SchemaTypes, model } = require('mongoose');
+const multer = require('multer');
 // const { TOTP } = require('totp-generator');
-const router = express.Router();
+const router = express();
 
 const OTPModel = new Schema({
     identifierBish: {
@@ -72,6 +73,41 @@ router.get('/otp-package', (req, res) => {
         upperCaseAlphabets: false
     });
     res.json(lol)
+});
+
+router.set('views', 'src/views/mew');
+router.set('view engine', 'ejs')
+
+router.get('/image', (req, res) => {
+    res.render('me');
+});
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/') // Where to store the files
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname) // Filename
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5 // Limit file size to 5MB
+    },
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype.startsWith('image/')) { // Filter only images
+            cb(null, true);
+        } else {
+            cb(new Error('Only images are allowed!'), false);
+        }
+    }
+});
+
+router.post('/image', upload.single('humm'), (req, res) => {
+    console.log(req.file);
+    res.json('mwuhehe')
 })
 
-module.exports = router
+module.exports = router;

@@ -12,7 +12,7 @@ const isLogin = (req, res, next) => {
          */
         next()
     } else {
-        res.redirect('/admin/login?redirect=' + req.url)
+        res.redirect('/admin/login?redirect=/dashboard' + req.url)
     }
 }
 

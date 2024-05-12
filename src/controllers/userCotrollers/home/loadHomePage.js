@@ -1,4 +1,5 @@
 const User = require("../../../models/User");
+const product = require("../../../models/product");
 
 /**
  * 
@@ -7,12 +8,14 @@ const User = require("../../../models/User");
  * @param {import("express").NextFunction} next 
  */
 const loadHomePage = async (req, res, next) => {
+    const products = await product.find({});
     if(!req.session.userId) {
-        return res.render('home');
+        return res.render('home', {
+            products
+        });
     }
     const userDetails = await User.findById(req.session.userId);
-    const {password, ...rest} = userDetails;
-    res.render('home', {userData: rest})
+    res.render('home', {userDetails, products})
 }
 
 module.exports = loadHomePage

@@ -1,26 +1,28 @@
 const express = require('express');
+const updates = require('../models/updates');
 const router = express();
 
 router.set('views', './src/views/updates')
 
-const data = [
-    {
-        date: '27.04.2024',
-        description: 'Creation of project',
-        what: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi fuga unde, eaque officia nemo animi vel error quibusdam. Placeat tempore distinctio tempora delectus debitis temporibus quasi, corporis officiis labore deleniti!',
-        why: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi fuga unde, eaque officia nemo animi vel error quibusdam. Placeat tempore distinctio tempora delectus debitis temporibus quasi, corporis officiis labore deleniti!',
-        newPackages: [
-            {
-                packageName: 'express',
-                useCase: 'main framework'
+
+router.get('/', async (req, res) => {
+    const updatesDatas = await updates.aggregate([
+        {
+          $sort: { "date": -1 } // Sort updates by date in descending order
+        },
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+                updates: { $push: "$$ROOT" }
             }
-        ],
-    }
-]
-
-router.get('/', (req, res) => {
-
-    res.render('index');
+        },
+    ]);
+    // res.render('');
+    // return res.json(updatesDatas)
+    res.render('index', {
+        title: 'Mew Cat\'s Updates & Improvements',
+        updatesDatas
+    });
 })
 
 module.exports = router;

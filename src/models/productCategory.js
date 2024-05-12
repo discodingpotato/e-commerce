@@ -6,17 +6,27 @@ const schema = new Schema({
         required: true,
         unique: true
     },
-    isDeleted: {
-        type: SchemaTypes.Boolean,
-        required: true,
-        unique: true
-    },
     isBlocked: {
         type: SchemaTypes.Boolean,
-        required: true,
-        unique: true
+        default: false
     },
+    isDeleted: {
+        type: SchemaTypes.Boolean,
+        default: false
+    }
 });
+
+/**
+ * Soft Delete? cannot find you : )
+ */
+
+// schema.pre('find', function () {
+//     this.where({isDeleted: false});
+// })
+
+// schema.pre('findOne', function () {
+//     this.where({isDeleted: false});
+// })
 
 module.exports = model('product-categories', schema);
 

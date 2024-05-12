@@ -1,9 +1,10 @@
 const handleOTPandRender = require("./otp/handleOTPandRender");
-const validateRegister = require("./signup/validateRegister");
-const validateUserLogin = require("./signin/validateUserLogin");
+const validateRegister = require("./validateRegister");
+const validateUserLogin = require("./validateUserLogin");
 const verifyUserByOTP = require("./otp/verifyUserByOTP");
 const resendOTP = require("./otp/resendOTP");
 const loadHomePage = require("./home/loadHomePage");
+const productView = require("./home/productView");
 
 module.exports = {
     validateUserLogin,
@@ -11,5 +12,6 @@ module.exports = {
     handleOTPandRender,
     verifyUserByOTP,
     resendOTP,
-    loadHomePage
+    loadHomePage,
+    productView
 }

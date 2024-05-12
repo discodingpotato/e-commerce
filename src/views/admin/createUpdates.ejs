@@ -1,0 +1,197 @@
+<%- include('../layout/adminHeader') %>
+    <div class="flex h-screen bg-neutral-950" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <%- include("../components/admin/desktopSidebar") %>
+            <%- include("../components/admin/mobileSidebar") %>
+                <div class="flex flex-col flex-1 w-full">
+                    <%- include("../components/admin/desktopTopNavbar") %>
+                        <main class="h-full overflow-y-auto font-quicksand">
+                            <div class="container px-2 mx-auto">
+                                <section class="top-16">
+                                    <div class="mx-auto max-w-4xl px-4 py-8 lg:py-16">
+                                        <h2 class="mb-4 text-xl font-bold text-white">Add a new update</h2>
+                                        <form id="newUpdate" enctype="multipart/form-data">
+                                            <div class="space-y-3 rounded-lg bg-neutral-900 p-3">
+                                                <div>
+                                                    <label for="updateDescription" class="mb-2 block text-sm font-medium text-white">Description <span class="italic text-red-500">*</span></label>
+                                                    <input type="text" id="updateDescription" style="background-color: rgb(39, 39, 39) !important;" class="block w-full rounded-lg border-transparent bg-neutral-800 p-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none" placeholder="Enter soe mew..." />
+                                                </div>
+                                                <div>
+                                                    <label class="mb-2 block text-sm font-medium text-white">Describe? some points? <span class="italic text-red-500">*</span></label>
+                                                    <div class="flex border-b border-neutral-700 shadow-sm">
+                                                        <span class="inline-flex w-16 min-w-fit items-center justify-center rounded-tl-md border-none bg-neutral-700 text-sm text-neutral-400">what</span>
+                                                        <input type="text" id="whatField" class="block w-full rounded-tr-lg border-none bg-neutral-800 px-4 py-3 pe-11 text-sm text-neutral-400 placeholder-neutral-500 shadow-sm outline-none whitespace-normal" style="background-color: rgb(39, 39, 39) !important; border-top-right-radius: 0.5rem;" />
+                                                    </div>
+                                                    <div class="flex shadow-sm">
+                                                        <span class="inline-flex w-16 min-w-fit items-center justify-center rounded-bl-md border-none text-sm bg-neutral-700 text-neutral-400">why</span>
+                                                        <input type="text" id="whyField" class="block w-full rounded-br-lg border-none overflow-hidden bg-neutral-800 px-4 py-3 pe-11 text-sm text-neutral-400 placeholder-neutral-500 shadow-sm outline-none" style="background-color: rgb(39, 39, 39) !important; border-bottom-right-radius: 0.5rem;" />
+                                                    </div>
+                                                </div>
+                                                <div class="relative">
+                                                    <label for="packageInput" class="mb-2 block text-sm font-medium text-white">Added packages</label>
+                                                    <div class="rounded-lg bg-neutral-800 flex items-center" id="packageTags">
+                                                        <!-- <span class="whitespace-nowrap ml-2 inline-flex items-center rounded h-6 px-2 py-1 text-sm font-medium bg-blue-900 text-blue-300">express-flash
+                                                            <button type="button" class="ms-1 inline-flex items-center rounded-sm bg-transparent p-1 text-sm text-blue-400" id="tagRemove">
+                                                                <svg class="h-2 w-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" /> </svg>
+                                                            </button>
+                                                        </span> -->
+                                                        
+                                                        <input type="text" id="packageInput" style="background-color: rgb(39, 39, 39) !important;" class="block w-full focus:ring-0 rounded-lg border-none border-transparent p-2.5 text-sm text-white placeholder-neutral-500 outline-none" />
+                                                    </div>
+                                                    <div id="searchResults" class="rounded-lg bg-neutral-800 ring-2 hidden items-center flex-col absolute w-full mt-2">
+                                                        <div id="packageSkelton" class="h-4 rounded-full bg-neutral-700 mb-2 animate-pulse mt-3 mx-3"></div>
+                                                </div>
+                                                <!-- <div>
+                                                    <h3 class="mb-2 block text-sm font-medium text-white">Preview?</h3>
+                                                    <div class="mb-4 hidden grid-cols-3 gap-4 lg:grid-cols-4" id="previewContainer"></div>
+                                                    <div id="imageUploadContainer">
+                                                        <label for="images" class="hover:bg-bray-800 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-700 bg-neutral-800 hover:bg-neutral-700">
+                                                            <div class="flex flex-col items-center justify-center pb-6 pt-5">
+                                                                <svg class="mb-4 h-8 w-8 text-neutral-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                                </svg>
+                                                                <p class="mb-2 text-center text-sm font-semibold text-neutral-400">Click to upload</p>
+                                                            </div>
+                                                            <input id="images" type="file" class="hidden" multiple accept="image/*" />
+                                                        </label>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <button type="submit" class="mt-4 inline-flex items-center rounded-lg bg-green-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 sm:mt-6">Post</button>
+                                        </form>
+                                    </div>
+                                </section>
+                            </div>
+                        </main>
+                </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            let whatField = $("#whatField");
+            let whyField = $("#whyField");
+            let searchResults = $("#searchResults");
+            let packageSkelton = $("#packageSkelton");
+            let packageInput = $("#packageInput");
+
+            $("#newUpdate").submit(function (e) {
+                e.preventDefault();
+                let updateDescription = $("#updateDescription");
+
+                let mew = [];
+                $("#packageTags span").each(function (index, elem) {
+                    mew.push($(this).text().trim())    
+                })
+                console.log(mew)
+
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/dashboard/updates",
+                    data: JSON.stringify({
+                        description: updateDescription.val().trim(),
+                        what: $("#whatField").val().trim(),
+                        why: $("#whyField").val().trim(),
+                        addedPackages: mew.length > 0 ? mew : []
+                    }),
+                    contentType: 'application/json',
+                    // dataType: "dataType",
+                    success: function (response) {
+                        Swal.fire({
+                                icon: 'success',
+                                title: `New post created. hear over to the update route`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                // location.reload()
+                            })
+                    }
+                });
+            })
+
+            packageInput.focus(function () {
+                searchResults.show();
+            })
+            
+            packageInput.blur(function () {
+                setTimeout(() => {
+                    searchResults.hide()
+                }, 250);
+            });
+            
+            var typingTimer;
+            
+            packageInput.on('input', function() {
+                searchResults.children().not("#packageSkelton").remove()
+                searchResults.show()
+                packageSkelton.show();
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(function() {
+                    if(packageInput.val().trim()) {
+                        const proceedData = new CustomEvent('proceedData', {
+                            detail: packageInput.val().trim(),
+                        });
+                        document.dispatchEvent(proceedData)
+                    }
+                }, 500);
+            })
+
+            document.addEventListener('proceedData',function (e) {
+                // Passed Data
+                let valueToSearch = e.detail;
+                // Remove the childs except the loader / skelton
+                // Ajax request to backend
+                $.ajax({
+                    type: "GET",
+                    url: `/admin/dashboard/updates/packages?search=${valueToSearch}`,
+                    dataType: "json",
+                    success: function (response) {
+                        searchResults.children().not("#packageSkelton").remove()
+                        let responceData = response.packageData;
+                        packageSkelton.hide();
+                        if(responceData.length < 1) {
+                            return $('<span>').addClass('flex items-center justify-center text-white font-medium w-full py-2').text("No Results Found 😊").appendTo(searchResults)
+                        }
+                        responceData.forEach(pkg => {
+                            let parentDiv = $('<div>').addClass('flex gap-1 text-white mb-2 font-medium hover:bg-neutral-700 w-full cursor-pointer px-3')
+                                
+                                let packageName = $('<h2>').addClass('text-orange-200 whitespace-nowrap').text(pkg.name)
+                            parentDiv.append(packageName)
+
+                            let dashNode = document.createTextNode('-')
+                            parentDiv.append(dashNode)
+                            
+                            let packageDescription = $('<span>').addClass('overflow-hidden whitespace-nowrap text-ellipsis w-full').text(pkg.description != undefined ? pkg.description : 'No Description')
+                            parentDiv.append(packageDescription);
+
+                            searchResults.append(parentDiv)
+                        });
+                    },
+                });
+            });
+
+            searchResults.on('click', 'h2, span', function (e) {
+                let selectedPackage = ''
+                if ($(this).is('h2')) {
+                    selectedPackage = $(this).text();
+                } else if ($(this).is('span')) {
+                    selectedPackage = $(this).siblings('h2').text();
+                }
+                // console.log(selectedPackage);
+                packageInput.val('');
+                packageInput.focus();
+                let tagG = $('<span>').addClass('whitespace-nowrap ml-2 inline-flex items-center rounded h-6 px-2 py-1 text-sm font-medium bg-blue-900 text-blue-300')
+                    // .attr('id', selectedPackage.replace('@', '').replace('/', '-'));
+                let svgCode = '<svg class="h-2 w-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" /> </svg>'
+                let clearButton = $('<button>').addClass('ms-1 inline-flex items-center rounded-sm bg-transparent p-1 text-sm text-blue-400').attr('id', 'tagRemove').attr('type', 'button')
+                    // .attr('data-dismiss-target', selectedPackage.replace('@', '').replace('/', '-'));
+                tagG.text(selectedPackage)
+                clearButton.append(svgCode)
+                tagG.append(clearButton);
+                tagG.insertBefore("#packageInput")
+                return
+            });
+            
+            $("#packageTags").on('click', ' button#tagRemove', function (e) {
+                $(this).parent().remove();
+            })
+        });
+    </script>
+<%- include('../layout/adminFooter') %>

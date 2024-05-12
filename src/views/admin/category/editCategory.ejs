@@ -1,0 +1,126 @@
+<%- include("../../layout/adminHeader") %>
+    <div class="flex h-screen bg-neutral-950" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <%- include("../../components/admin/desktopSidebar") %>
+            <%- include("../../components/admin/mobileSidebar") %>
+                <div class="flex flex-col flex-1 w-full">
+                    <%- include("../../components/admin/desktopTopNavbar") %>
+                        <main class="h-full overflow-y-auto justify-center items-center flex font-quicksand">
+                            <div class="container px-6 mx-auto grid">
+                                <section>
+                                    <div class="max-w-2xl px-4 py-8 mx-auto lg:py-16">
+                                        <h2 class="mb-4 text-xl font-bold text-white">Edit category</h2>
+                                        <form id="updateCategory">
+                                            <div class="gap-4 mb-4 sm:gap-6 sm:mb-5">
+                                                    <label for="categoryName" class="block mb-2 text-sm font-medium text-white">Category Name</label>
+                                                    <input type="hidden" id="categoryId" value="<%= categoryData._id %>">
+                                                    <input type="text" id="categoryName" class="border-none text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-gray-400 text-white" style="background-color: rgb(39, 39, 39) !important;" value="<%= categoryData.name %>" placeholder="Type product name" required="">
+                                            </div>
+                                            <div class="flex items-center space-x-4">
+                                                <button type="submit" class="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 ">
+                                                    Update Category
+                                                </button>
+                                                <button id="categoryDelete" type="button" class="inline-flex items-center border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center border-red-500 text-red-500 hover:text-white hover:bg-red-600 ">
+                                                    <svg class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </section>
+                            </div>
+                        </main>
+                </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            let categoryName = $('#categoryName');
+
+            categoryName.change(function () {
+                categoryName.siblings('label').find('span').text(`*`);
+                categoryName.removeClass('border-red-500 placeholder-red-500').addClass('border-transparent');    
+            })
+            
+            
+            
+            function errorMessage (element, message) {
+                categoryName.siblings('label').find('span').text(`- ${message}`);
+                categoryName.addClass('border-red-500 placeholder-red-500').removeClass('border-transparent');
+            }
+
+            let categoryId = $("#categoryId");
+
+            $("#updateCategory").submit(function (e) { 
+                e.preventDefault();
+                
+                
+                if(!categoryName.val().trim()) {
+                    errorMessage(categoryName, 'Un categorized??')
+                    return;
+                }
+
+                var dataToSend = {
+                    name: categoryName.val().trim()
+                }
+
+
+                $.ajax({
+                    type: "PUT",
+                    url: `/admin/dashboard/categories/${categoryId.val()}`,
+                    data: JSON.stringify(dataToSend),
+                    // dataType: "dataType",
+                    contentType: 'application/json',
+                    // processData: false,
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Category added succesfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '/admin/dashboard/categories'
+                        })
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 409) {
+                            // Handle conflict (category already exists)
+                            errorMessage(categoryName, 'Already exists!')
+                            console.log('Category already exists');
+                        } else {
+                            // Handle other errors
+                            console.error('Error:', xhr.status, xhr.statusText);
+                        }
+                    }
+                });
+
+            });
+            
+            $('#categoryDelete').click(function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: "Are you sure to delete \"<%= categoryData.name %>\"?",
+                    showDenyButton: true,
+                    confirmButtonText: "Yes",
+                    denyButtonText: `No, Cancel`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: `/admin/dashboard/categories/${categoryId.val()}`,
+                            success: function (response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Deleted \"<%= categoryData.name %>\"',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    window.location.href = '/admin/dashboard/categories'
+                                })
+                            }
+                        });
+                    }
+                });
+            })
+        });
+    </script>
+<%- include("../../layout/footer") %>

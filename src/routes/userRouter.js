@@ -44,6 +44,12 @@ router.post('/otp', isLogin, userControllers.verifyUserByOTP);
 router.get('/resend-otp', userControllers.resendOTP);
 
 /**
+ * Product Details
+ */
+
+router.get('/products/:productId', userControllers.productView)
+
+/**
  * -------------------------------
  * ------ Log Out / Destroy ------
  * -------------------------------

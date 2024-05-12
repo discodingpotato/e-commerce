@@ -1,116 +1,51 @@
 <%- include('../layout/header') %>
-<div class="bg-slate-950 text-white">
+  <div class="bg-slate-950 text-white">
     <nav class="flex items-center justify-between p-10 sticky top-0 bg-slate-950">
       <div>Logo</div>
       <div>Avatar of the user</div>
     </nav>
-    <div class="flex justify-center pt-24">
-      <h1 class="text-3xl font-bold font-quicksand">Updates Created</h1>
+    <div class="flex justify-center pt-20">
+      <h1 class="text-2xl font-bold font-quicksand">Updates</h1>
     </div>
-    <div class="space-y-2 pb-16 pt-16">
-      <div class="flex justify-center">
-        <div class="max-w-7xl rounded-3xl bg-slate-800 p-10">
-          <h2 class="text-2xl font-bold">2024.04.29</h2>
-          <p class="text-xl font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum nostrum quo iusto repellat ipsum et enim beatae? Eligendi repellat omnis doloremque non? Dolor, debitis sed! Ipsum optio est aliquid!</p>
-          <ul class="list-inside list-disc space-y-2 pt-2 font-mono font-semibold">
-            <li>What: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, vero? Voluptatum nisi culpa deleniti repudiandae? Quidem velit maiores aut molestias voluptatum rerum, perferendis accusantium modi corporis illum hic cumque similique.</li>
-            <li>Why: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, totam? Placeat inventore officia laborum! Dicta totam natus labore corrupti! Ipsa neque eum alias aperiam sunt atque quos tempore dolorem tenetur?</li>
-            <li>
-              Added Packages:
-              <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
-                <li><a class="text-blue-500 hover:underline" href="https://npmjs.com/package/express-flash">express-flash</a> - To flash a message an make a redirect option</li>
-              </ol>
-            </li>
-          </ul>
+    <div class="space-y-2 pb-16 pt-12 px-5">
+      <% updatesDatas.forEach(updatesData => { %>
+        <div class="flex justify-center">
+          <div class="max-w-6xl w-full rounded-2xl bg-slate-800 p-6 pt-8">
+            <h2 class="text-xl font-bold"><%= updatesData._id %></h2>
+            <!-- Each will be here -->
+            <% updatesData.updates.forEach(update => { %> 
+              <p class="text-md font-semibold pt-2"><%= update.description %></p>
+              <ul class="list-inside pl-2 list-disc space-y-2 pt-2 font-mono font-semibold">
+                <li>What: <%= update.what %></li>
+                <li>Why: <%= update.why %></li>
+                <!-- Check if exist? -->
+                <% if (update.newPackages.length > 0) { %>
+                  <li>
+                    Added Packages:
+                    <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
+                      <!-- Each -->
+                      <% update.newPackages.forEach(pkg => { %>
+                        <li><a class="text-blue-500 hover:underline" target="_blank" href="https://npmjs.com/package/<%= pkg.packageName %>"><%= pkg.packageName %></a> - <%= pkg.packageDescription %></li>
+                        <% }) %>
+                    </ol>
+                  </li>
+                  <% } %>
+              </ul>
+            <% }) %>
+          </div>
         </div>
-      </div>
-      <div class="flex justify-center">
-        <div class="max-w-7xl rounded-3xl bg-slate-800 p-10">
-          <h2 class="text-2xl font-bold">2024.04.29</h2>
-          <p class="text-xl font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum nostrum quo iusto repellat ipsum et enim beatae? Eligendi repellat omnis doloremque non? Dolor, debitis sed! Ipsum optio est aliquid!</p>
-          <ul class="list-inside list-disc space-y-2 pt-2 font-mono font-semibold">
-            <li>What: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, vero? Voluptatum nisi culpa deleniti repudiandae? Quidem velit maiores aut molestias voluptatum rerum, perferendis accusantium modi corporis illum hic cumque similique.</li>
-            <li>Why: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, totam? Placeat inventore officia laborum! Dicta totam natus labore corrupti! Ipsa neque eum alias aperiam sunt atque quos tempore dolorem tenetur?</li>
-            <li>
-              Added Packages:
-              <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
-                <li><a class="text-blue-500 hover:underline" href="https://npmjs.com/package/express-flash">express-flash</a> - To flash a message an make a redirect option</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="flex justify-center">
-        <div class="max-w-7xl rounded-3xl bg-slate-800 p-10">
-          <h2 class="text-2xl font-bold">2024.04.29</h2>
-          <p class="text-xl font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum nostrum quo iusto repellat ipsum et enim beatae? Eligendi repellat omnis doloremque non? Dolor, debitis sed! Ipsum optio est aliquid!</p>
-          <ul class="list-inside list-disc space-y-2 pt-2 font-mono font-semibold">
-            <li>What: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, vero? Voluptatum nisi culpa deleniti repudiandae? Quidem velit maiores aut molestias voluptatum rerum, perferendis accusantium modi corporis illum hic cumque similique.</li>
-            <li>Why: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, totam? Placeat inventore officia laborum! Dicta totam natus labore corrupti! Ipsa neque eum alias aperiam sunt atque quos tempore dolorem tenetur?</li>
-            <li>
-              Added Packages:
-              <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
-                <li><a class="text-blue-500 hover:underline" href="https://npmjs.com/package/express-flash">express-flash</a> - To flash a message an make a redirect option</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="flex justify-center">
-        <div class="max-w-7xl rounded-3xl bg-slate-800 p-10">
-          <h2 class="text-2xl font-bold">2024.04.29</h2>
-          <p class="text-xl font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum nostrum quo iusto repellat ipsum et enim beatae? Eligendi repellat omnis doloremque non? Dolor, debitis sed! Ipsum optio est aliquid!</p>
-          <ul class="list-inside list-disc space-y-2 pt-2 font-mono font-semibold">
-            <li>What: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, vero? Voluptatum nisi culpa deleniti repudiandae? Quidem velit maiores aut molestias voluptatum rerum, perferendis accusantium modi corporis illum hic cumque similique.</li>
-            <li>Why: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, totam? Placeat inventore officia laborum! Dicta totam natus labore corrupti! Ipsa neque eum alias aperiam sunt atque quos tempore dolorem tenetur?</li>
-            <li>
-              Added Packages:
-              <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
-                <li><a class="text-blue-500 hover:underline" href="https://npmjs.com/package/express-flash">express-flash</a> - To flash a message an make a redirect option</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="flex justify-center">
-        <div class="max-w-7xl rounded-3xl bg-slate-800 p-10">
-          <h2 class="text-2xl font-bold">2024.04.29</h2>
-          <p class="text-xl font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum nostrum quo iusto repellat ipsum et enim beatae? Eligendi repellat omnis doloremque non? Dolor, debitis sed! Ipsum optio est aliquid!</p>
-          <ul class="list-inside list-disc space-y-2 pt-2 font-mono font-semibold">
-            <li>What: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, vero? Voluptatum nisi culpa deleniti repudiandae? Quidem velit maiores aut molestias voluptatum rerum, perferendis accusantium modi corporis illum hic cumque similique.</li>
-            <li>Why: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, totam? Placeat inventore officia laborum! Dicta totam natus labore corrupti! Ipsa neque eum alias aperiam sunt atque quos tempore dolorem tenetur?</li>
-            <li>
-              Added Packages:
-              <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
-                <li><a class="text-blue-500 hover:underline" href="https://npmjs.com/package/express-flash">express-flash</a> - To flash a message an make a redirect option</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="flex justify-center">
-        <div class="max-w-7xl rounded-3xl bg-slate-800 p-10">
-          <h2 class="text-2xl font-bold">2024.04.29</h2>
-          <p class="text-xl font-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus rerum nostrum quo iusto repellat ipsum et enim beatae? Eligendi repellat omnis doloremque non? Dolor, debitis sed! Ipsum optio est aliquid!</p>
-          <ul class="list-inside list-disc space-y-2 pt-2 font-mono font-semibold">
-            <li>What: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus, vero? Voluptatum nisi culpa deleniti repudiandae? Quidem velit maiores aut molestias voluptatum rerum, perferendis accusantium modi corporis illum hic cumque similique.</li>
-            <li>Why: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, totam? Placeat inventore officia laborum! Dicta totam natus labore corrupti! Ipsa neque eum alias aperiam sunt atque quos tempore dolorem tenetur?</li>
-            <li>
-              Added Packages:
-              <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
-                <li><a class="text-blue-500 hover:underline" href="https://npmjs.com/package/express-flash">express-flash</a> - To flash a message an make a redirect option</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <% }) %>
     </div>
     <footer class="border-t border-gray-600/95">
       <ul class="flex justify-center p-8 text-sm text-gray-600">
-        <li class="relative inline-block pe-8 text-neutral-400 before:absolute before:end-3 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-600 last:pe-0 last-of-type:before:hidden">Crafted by</li>
-        <li class="relative inline-block pe-8 text-neutral-400 before:absolute before:end-3 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-600 last:pe-0 last-of-type:before:hidden">Muhammed Munawar U</li>
+        <li
+          class="relative inline-block pe-8 text-neutral-400 before:absolute before:end-3 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-600 last:pe-0 last-of-type:before:hidden">
+          Crafted by</li>
+        <li
+          class="relative inline-block pe-8 text-neutral-400 before:absolute before:end-3 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-600 last:pe-0 last-of-type:before:hidden">
+          Muhammed Munawar U</li>
       </ul>
     </footer>
   </div>
-  
-<%- include('../layout/footer') %>
+
+  <%- include('../layout/footer') %>

@@ -1,0 +1,427 @@
+<%- include('../../layout/adminHeader') %>
+    <div class="flex h-screen bg-neutral-950" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <%- include("../../components/admin/desktopSidebar") %>
+            <%- include("../../components/admin/mobileSidebar") %>
+                <div class="flex flex-col flex-1 w-full">
+                    <%- include("../../components/admin/desktopTopNavbar") %>
+                        <main class="h-full overflow-y-auto font-quicksand">
+                            <div class="container px-2 mx-auto">
+                                <section class="top-16">
+                                    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+                                        <h2 class="mb-4 text-xl font-bold text-white">Add a new product</h2>
+                                        <form id="addProduct" enctype="multipart/form-data">
+                                            <div class="space-y-3">
+                                                <!-- Product Name -->
+                                                <div>
+                                                    <label for="productName"
+                                                        class="block mb-2 text-sm font-medium text-white">Product Name
+                                                        <span class="text-red-500 italic">*</span></label>
+                                                    <input type="text" id="productName"
+                                                        style="background-color: rgb(39, 39, 39) !important;"
+                                                        class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                        placeholder="Type product name">
+                                                </div>
+                                                <div class="flex justify-between space-x-4">
+                                                    <!-- Brand -->
+                                                    <div class="w-full">
+                                                        <label for="productBrand"
+                                                            class="block mb-2 text-sm font-medium text-white">Brand
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                        <input type="text" id="productBrand"
+                                                            style="background-color: rgb(39, 39, 39) !important;"
+                                                            class="placeholder-neutral-500 text-sm border-transparent rounded-lg block w-full p-2.5 bg-neutral-800 text-white focus:outline-none"
+                                                            placeholder="Product brand">
+                                                    </div>
+                                                    <!-- Price -->
+                                                    <div class="w-full">
+                                                        <label for="productPrice"
+                                                            class="block mb-2 text-sm font-medium text-white">Price
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                        <input data-input-counter type="text" id="productPrice"
+                                                            style="background-color: rgb(39, 39, 39) !important;"
+                                                            class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                            placeholder="$2999">
+                                                    </div>
+                                                </div>
+                                                <!-- Category -->
+                                                <div class="flex justify-between space-x-4">
+                                                    <div class="w-full">
+                                                        <label for="productCategory"
+                                                            class="block mb-2 text-sm font-medium text-white whitespace-nowrap">Category
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                        <select id="productCategory"
+                                                            class="text-sm border-transparent rounded-lg block w-full p-2.5 bg-neutral-800 text-white focus:outline-none"
+                                                            style="background-color: rgb(38, 38, 38) !important;">
+                                                            <option selected value="" disabled>Select category</option>
+                                                            <option value="TV">TV/Monitors</option>
+                                                            <option value="PC">PC</option>
+                                                            <option value="GA">Gaming/Console</option>
+                                                            <option value="PH">Phones</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- Quantity -->
+                                                    <div class="w-full">
+                                                        <label for="productQuantity"
+                                                            class="whitespace-nowrap block mb-2 text-sm font-medium text-white">Quantity
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                        <input type="text" data-input-counter id="productQuantity"
+                                                            class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                            style="background-color: rgb(38, 38, 38) !important;"
+                                                            placeholder="12">
+                                                    </div>
+                                                </div>
+                                                <!-- Available Sizes -->
+                                                <div>
+                                                    <h3 class="mb-2 text-sm font-medium text-white">Available Sizes:
+                                                        <span class="text-red-500 italic">*</span></h3>
+                                                    <ul class="flex w-full gap-6" id="productSizes">
+                                                        <li>
+                                                            <input type="checkbox" id="sm" value="" class="hidden peer">
+                                                            <label for="sm"
+                                                                class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                <span class="text-lg font-semibold">SM</span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <input type="checkbox" id="md" value="" class="hidden peer">
+                                                            <label for="md"
+                                                                class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                <span class="text-lg font-semibold">MD</span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <input type="checkbox" id="lg" value="" class="hidden peer">
+                                                            <label for="lg"
+                                                                class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                <span class="text-lg font-semibold">LG</span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <input type="checkbox" id="xl" value="" class="hidden peer">
+                                                            <label for="xl"
+                                                                class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                <span class="text-lg font-semibold">XL</span>
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Description -->
+                                                <div>
+                                                    <label for="productDescription"
+                                                        class="block mb-2 text-sm font-medium text-white">Description
+                                                        <span class="text-red-500 italic">*</span></label>
+                                                    <textarea id="productDescription" rows="8"
+                                                        class="border-transparent block p-2.5 w-full text-sm rounded-lg bg-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+                                                        style="background-color: rgb(38, 38, 38) !important;"
+                                                        placeholder="Your description here"></textarea>
+                                                </div>
+                                                <div>
+                                                    <h3 class="block mb-2 text-sm font-medium text-white">Product Images
+                                                        <span class="text-red-500 italic">*</span></h3>
+                                                    <div class="mb-4 hidden grid-cols-3 gap-4 lg:grid-cols-4"
+                                                        id="previewContainer">
+                                                        <!-- Preview Container ( Code ) -->
+                                                        <!-- <div class="relative rounded-lg bg-neutral-900 p-2 lg:h-36 lg:w-36">
+                                                            <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-side-image.png" alt="" srcset="" />
+                                                            <button type="button" class="absolute bottom-1 left-1 cursor-pointer bg-transparent text-red-600">
+                                                            <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                            </svg>
+                                                            </button>
+                                                        </div> -->
+                                                    </div>
+                                                    <div id="imageUploadContainer">
+                                                        <label for="images"
+                                                            class="hover:bg-bray-800 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-700 bg-neutral-800 hover:bg-neutral-700">
+                                                            <div
+                                                                class="flex flex-col items-center justify-center pb-6 pt-5">
+                                                                <svg class="mb-4 h-8 w-8 text-neutral-400"
+                                                                    aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                    viewBox="0 0 20 16">
+                                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="2"
+                                                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                                </svg>
+                                                                <p
+                                                                    class="mb-2 text-center text-sm font-semibold text-neutral-400">
+                                                                    Click to upload</p>
+                                                            </div>
+                                                            <input id="images" type="file" class="hidden" multiple
+                                                                accept="image/*" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit"
+                                                class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800">
+                                                Add product
+                                            </button>
+                                        </form>
+                                    </div>
+                                </section>
+                            </div>
+                        </main>
+                </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Variables?
+            let imageNumber = 0;
+            // Preview Container
+            const previewContainer = document.getElementById("previewContainer");
+            // Image Upload
+            $("#images").change(function (e) {
+                e.preventDefault();
+                // console.log(e.target.files)
+                let filesT = e.target.files;
+                if (filesT && filesT.length > 0) {
+                    previewContainer.classList.replace('hidden', 'grid')
+                    for (let i = 0; i < filesT.length; i++) {
+                        handleImagePreview(filesT[i]);
+                    }
+                }
+            });
+            // Handle Image Preview
+            function handleImagePreview(imageFile) {
+                console.log('hehe');
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imageNumber++;
+                    // Preview Div
+                    const previewImageDiv = document.createElement('div');
+                    previewImageDiv.className = 'relative rounded-lg bg-neutral-900 p-2 lg:h-36 lg:w-36';
+                    previewImageDiv.id = `previewImage${imageNumber}`;
+                    // Preview Image
+                    let previewImage = document.createElement('img');
+                    console.log(e.target);
+                    previewImage.src = e.target.result;
+                    previewImage.alt = `previewImage${imageNumber}`;
+                    // Remove Button
+                    let previewDeleteButton = document.createElement('button');
+                    previewDeleteButton.className = 'absolute bottom-1 left-1 cursor-pointer bg-transparent text-red-600';
+                    previewDeleteButton.innerHTML = '<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\n<path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>\n</svg>'
+                    // Remove Image preview
+                    previewDeleteButton.addEventListener('click', function () {
+                        previewContainer.removeChild(previewImageDiv);
+
+                    });
+                    previewImageDiv.appendChild(previewImage);
+                    previewImageDiv.appendChild(previewDeleteButton);
+                    previewContainer.appendChild(previewImageDiv);
+                }
+                reader.readAsDataURL(imageFile);
+            }
+            // Upload the data to server
+
+            // Created this thing ti find my mistake on adding # inside id=""; watta stwepidddd;; : ) 
+            // document.getElementById('addProduct').addEventListener('submit', function (e) {
+            //     e.preventDefault()
+            // })
+
+            const productName = $("#productName");
+            const productBrand = $("#productBrand");
+            const productPrice = $("#productPrice");
+            const productCategory = $("#productCategory");
+            const productQuantity = $("#productQuantity");
+            const productDescription = $("#productDescription");
+
+            const productSizes = $("#productSizes")
+
+            const imagePreviewTopDiv = $("#imagePreviewTopDiv")
+
+            const imageUploadContainer = $("#imageUploadContainer");
+
+
+            let kew = [
+                productName,
+                productBrand,
+                productPrice,
+                productCategory,
+                productQuantity,
+                productDescription,
+            ];
+            // Image count?
+            imageUploadContainer.change(function (e) {
+                imageUploadContainer.children('label').removeClass('border-red-500');
+                if ($("#previewContainer div img").length >= 3) {
+                    restoreDefault(imageUploadContainer, true)
+                }
+            });
+            // Restore span contents to "*"
+            function restoreDefault(elem, h3 = false) {
+                if (h3) {
+                    elem.siblings('h3').find('span').text('*')
+                } else {
+                    elem.siblings('label').find('span').text('*')
+                }
+                elem.removeClass('border-red-500 placeholder-red-500').addClass('border-transparent');
+            }
+            // On change of input fields
+            $.each(kew, function (indexInArray, valueOfElement) {
+                valueOfElement.on('input', function () {
+                    restoreDefault(valueOfElement)
+                    if (indexInArray === 3) {
+                        valueOfElement.removeClass('text-red-500').addClass('text-white')
+                    }
+                })
+            });
+
+            productSizes.change(function (e) {
+                productSizes.siblings('h3').find('span').text('*');
+            })
+
+            $("#addProduct").submit(function (e) {
+                e.preventDefault();
+                // Check Boxes?
+                let productSizesArray = [];
+                $("#productSizes li").each(function () {
+                    let listItem = $(this);
+                    var checkbox = listItem.find('input[type="checkbox"]');
+                    if (checkbox.prop('checked')) {
+                        productSizesArray.push(listItem.text().trim());
+                    }
+                })
+                // Product Images?
+                let productImageArray = [];
+                $("#previewContainer div img").each(function () {
+                    productImageArray.push($(this).attr('src'))
+                });
+                // Change "*" to some error message
+                function meCore(val, string, h3 = false) {
+                    if (h3) {
+                        val.siblings('h3').find('span').text(`- ${string}`);
+                    } else {
+                        val.siblings('label').find('span').text(`- ${string}`);
+                    }
+                    val.addClass('border-red-500 placeholder-red-500').removeClass('border-transparent');
+                }
+                // generate random string
+                const mewa = (type) => {
+                    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                    let result = '';
+                    for (let i = 0; i < 10; i++) {
+                        const randomIndex = Math.floor(Math.random() * characters.length);
+                        result += characters.charAt(randomIndex);
+                    }
+                    return result + '.' +  type.split('/')[1];
+                }
+                // Be here?
+                function converterDataURItoBlob(dataURI) {
+                    let byteString;
+                    let mimeString;
+                    let ia;
+
+                    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+                    byteString = atob(dataURI.split(',')[1]);
+                    } else {
+                    byteString = encodeURI(dataURI.split(',')[1]);
+                    }
+                    // separate out the mime component
+                    mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+                    // write the bytes of the string to a typed array
+                    ia = new Uint8Array(byteString.length);
+                    for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                    }
+                    return new Blob([ia], {type:mimeString});
+                }
+                // Files? - Convert data-image to a file
+                let productImageFilesArr = [];
+                productImageArray.forEach(val => {
+                    const blobData = converterDataURItoBlob(val);
+                    console.log(blobData);
+                    const file = new File([blobData], mewa(blobData.type), {type: blobData.type});
+                    console.log(file);
+                    productImageFilesArr.push(file);
+                });
+                // variable that validates the procedure
+                let canProceed = true;
+                // No Name?
+                if (!productName.val().trim()) {
+                    meCore(productName, 'cannot be empty!!');
+                    canProceed = false;
+                }
+                // No Brand?
+                if (!productBrand.val().trim()) {
+                    meCore(productBrand, 'Which brand??');
+                    canProceed = false;
+                }
+                // Valid price?
+                if (!productPrice.val().trim() || isNaN(productPrice.val()) || parseFloat(productPrice.val()) <= 0) {
+                    meCore(productPrice, 'Aha, free?');
+                    canProceed = false;
+                }
+                // No category selected?
+                if (!productCategory.val() || !productCategory.val().trim()) {
+                    productCategory.addClass('text-red-500');
+                    productCategory.removeClass('text-white')
+                    meCore(productCategory, 'Unsystematized?')
+                    canProceed = false;
+                }
+                // Valid quantity?
+                if (!productQuantity.val().trim() || isNaN(productQuantity.val()) || parseFloat(productQuantity.val()) <= 0) {
+                    meCore(productQuantity, 'Umm??, empty?')
+                    canProceed = false;
+                }
+                // Description should be atleast 25 words
+                if (!productDescription.val().trim() || productDescription.val().split(' ').length < 25) {
+                    meCore(productDescription, 'Atlest 25 words!')
+                    canProceed = false;
+                };
+                // Images (data-image)
+                if (productImageArray.length < 3) {
+                    meCore(imageUploadContainer, '3 images minimum!', true);
+                    if (productImageArray.length === 0) {
+                        imageUploadContainer.children('label').addClass('border-red-500');
+                    }
+                    canProceed = false;
+                }
+                // sizes? checkbox
+                if (productSizesArray.length === 0) {
+                    productSizes.siblings('h3').find('span').text('- Select atleast 1')
+                    canProceed = false;
+                };
+
+                if(canProceed) {
+                    console.log('lol');
+
+                    const formData = new FormData()
+                    formData.append('name', productName.val());
+                    // console.log(productName.val());
+                    formData.append('brand', productBrand.val());
+                    formData.append('price', productPrice.val());
+                    formData.append('category', productCategory.val());
+                    formData.append('quantity', productQuantity.val());
+                    formData.append('descriprion', productDescription.val());
+                    for (let i = 0; i < productImageFilesArr.length; i++) {
+                        formData.append(`images[]`, productImageFilesArr[i]);
+                    }
+                    // console.log(formData.entries());
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/dashboard/products",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Product added succesfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                // .then(() => {
+                                    // window.location.href = '/admin/dashboard/products'
+                                // })
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <%- include('../../layout/adminFooter') %>
