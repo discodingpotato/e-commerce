@@ -16,6 +16,11 @@ router.get('/', async (req, res) => {
                 updates: { $push: "$$ROOT" }
             }
         },
+        {
+            $sort: {
+                '_id': -1
+            }
+        }
     ]);
     // res.render('');
     // return res.json(updatesDatas)

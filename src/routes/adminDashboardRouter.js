@@ -11,6 +11,7 @@ const { uploadUpdateImages } = require('../middlewares/uploadUpdateImages');
 const postNewUpdate = require('../controllers/adminControllers/postNewUpdate');
 const { default: axios } = require('axios');
 const updates = require('../models/updates');
+const { editProductImages } = require('../middlewares/editProductImages');
 
 /**
  * To Implement active tab mechanism in navbar, just passing current route to the frontend
@@ -85,16 +86,11 @@ router.delete('/categories/:categoryId', categoryControllers.deleteCategory)
  * ------------------------------------------------------------------------------
  */
 
-router.get('/products', (req, res) => {
-    res.render('products/productList');
-});
-router.get('/products/add', (req, res) => {
-    res.render('products/addproduct');
-});
-router.post('/products', uploadProductImages, (req, res) => {
-    console.log(req.body, req.files);
-    res.json({ success: true })
-})
+router.get('/products', productControllers.listProducts);
+router.get('/products/add', productControllers.renderAddProduct);
+router.post('/products', uploadProductImages, productControllers.addProduct)
+router.get('/products/:productId', productControllers.renderEditProduct);
+router.put('/products/:productId', editProductImages, productControllers.editProduct)
 
 
 
@@ -119,11 +115,13 @@ router.delete('/users/:userId', userControllers.blockUser);
  */
 router.patch('/users/:userId/unblock', userControllers.unblockUser);
 
+/**
+ * Own implementaion, inspired from https://gemini.google.com/updates
+*/
 
 router.get('/updates', (req, res) => {
     res.render('createUpdates');
 });
-
 
 router.post('/updates', uploadUpdateImages, postNewUpdate);
 

@@ -20,6 +20,12 @@ const schema = new Schema({
         type: SchemaTypes.String,
         required: true
     },
+
+    changes: [{
+        type: SchemaTypes.String,
+        // required: true
+    }],
+
     newPackages: [
         {
             packageName: {

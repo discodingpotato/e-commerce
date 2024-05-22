@@ -1,6 +1,7 @@
 const OTP = require("../../../models/OTP");
 const User = require("../../../models/User");
 const generateOTP = require("../../../utils/generateOTP");
+const sendVerificationEmail = require("../../../utils/sendVerificationEmail");
 
 /**
  * 
@@ -38,7 +39,10 @@ const generateOTPandRender = async (req, res, next) => {
             }, {
                 otp,
                 createdAt: new Date()
-            }, { upsert: true });
+            }, {
+                upsert: true
+            });
+            await sendVerificationEmail(userDetails.email, otp, userDetails.displayName)
             console.log('OTP: ', otp)
         }
         res.render('otp', {

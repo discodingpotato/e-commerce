@@ -18,7 +18,7 @@ const productUpload = multer({
         }
     }
 });
-const uploadProductImages = productUpload.array('images[]');
+const uploadProductImages = productUpload.array('images');
 
 module.exports = {
     uploadProductImages,

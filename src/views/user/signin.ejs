@@ -1,9 +1,11 @@
 <%- include("../layout/header") %>
-<div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 text-black sm:py-12">
-  <div class="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl top-[-10rem]" aria-hidden="true">
-    <div class="relative -z-10 flex aspect-[1155/678] h-screen w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] items-center justify-center bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-50 left-1/2 sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-  </div>
-  <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:min-w-[35rem]">
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 text-black sm:py-12">
+        <div class="absolute inset-x-0  -z-10 transform-gpu overflow-hidden blur-3xl top-[-10rem]" aria-hidden="true">
+            <div class="relative -z-10 flex aspect-[1155/678] h-screen w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] items-center justify-center bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-50 left-1/2 sm:w-[72.1875rem]"
+                style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+        </div>
+        <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:min-w-[35rem]">
             <div class="mx-auto max-w-md flex items-center flex-col">
                 <p class="font-bold text-2xl">Welcome Back</p>
                 <p class="font-semibold text-sm text-">We're so excited to see you back!</p>
@@ -15,9 +17,9 @@
                         <span class="text-red-500 italic" id="emailSpanSection">
                             <% if (messages.errori) { %>
                                 - <%= messages.errori %>
-                            <% } else { %>
-                                *
-                            <% } %>
+                                    <% } else { %>
+                                        *
+                                        <% } %>
                         </span>
                     </label>
                     <div class="relative mb-4 font-medium">
@@ -31,8 +33,7 @@
                         </div>
                         <input type="email" id="emailify"
                             class="outline-none text-sm rounded-lg border-none block w-full ps-10 p-2.5 bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700"
-                            required name="email"
-                            value="" placeholder="Enter email">
+                            required name="email" value="" placeholder="Enter email">
                     </div>
                 </div>
                 <div class="mt-2">
@@ -41,9 +42,9 @@
                         <span class="text-red-500 italic" id="emailSpanSection">
                             <% if (messages.errori) { %>
                                 - <%= messages.errori %>
-                            <% } else { %>
-                                *
-                            <% } %>
+                                    <% } else { %>
+                                        *
+                                        <% } %>
                         </span>
                     </label>
                     <div class="relative mb-6 font-medium">
@@ -58,18 +59,44 @@
                         </div>
                         <input type="password" id="passwordify"
                             class="outline-none text-sm rounded-lg border-none block w-full ps-10 p-2.5  bg-gray-100 placeholder-gray-600 focus:ring-2 ring-blue-700"
-                            required name="password" placeholder="Enter Password"
-                            value="">
+                            required name="password" placeholder="Enter Password" value="">
                     </div>
                 </div>
                 <button type="submit"
                     class="text-white w-full font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-blue-600 hover:bg-blue-700 outline-none">Login</button>
             </form>
             <p class="text-sm font-medium text-gray-800">Need an account? <a href="/signup" class="text-blue-600">Register</a></p>
-
+            <div class="relative mt-4">
+                <div class="absolute flex items-center inset-0">
+                    <div class="border-slate-400 border-t w-full"></div>
+                </div>
+                <div class="leading-5 font-medium text-sm flex relative justify-center">
+                    <span class="text-slate-500 px-6 bg-white">or continue with</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-6">
+                <button id="googleRedirect" type="button" class="cursor-pointer hover:border-gray-500 py-2 px-3 inline-flex items-center gap-3 justify-center text-sm font-semibold rounded-md border border-gray-300 text-gray-950">
+                    <!-- <span class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"></span> -->
+                    <svg class="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24"><path d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z" fill="#EA4335"></path><path d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z" fill="#4285F4"></path><path d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z" fill="#FBBC05"></path><path d="M12.0004 24.0001C15.2404 24.0001 17.9654 22.935 19.9454 21.095L16.0804 18.095C15.0054 18.82 13.6204 19.245 12.0004 19.245C8.8704 19.245 6.21537 17.135 5.2654 14.29L1.27539 17.385C3.25539 21.31 7.3104 24.0001 12.0004 24.0001Z" fill="#34A853"></path></svg>
+                    Google
+                </button>
+                <button type="button" id="discordRedirect" class="cursor-pointer hover:border-gray-500 py-2 px-3 inline-flex items-center gap-3 justify-center text-sm font-semibold rounded-md border border-gray-300 text-gray-950">
+                    <!-- <span class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"></span> -->
+                    <svg class="h-5 w-5 text-blue-700" aria-hidden="true" viewBox="0 0 127.14 96.36">
+                        <path class="fill-[#5865f2]" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+                    </svg>
+                    Discord
+                </button>
+            </div>
         </div>
-    </form>
-  </div>
-</div>
+    </div>
+    <script>
+        $("#googleRedirect").click(function (e) {
+            location.href = '/auth/google'
+        })
+        $("#discordRedirect").click(function (e) {
+            location.href = '/auth/discord'
+        })
+    </script>
 
-  <%- include("../layout/footer") %>
+    <%- include("../layout/footer") %>

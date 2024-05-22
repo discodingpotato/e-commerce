@@ -11,6 +11,7 @@ const updatesRouter = require('./routes/updatesRouter');
 const testRouter = require('./routes/testRouter');
 const { default: mongoose, connection } = require('mongoose');
 const morgan = require('morgan');
+const passport = require('passport');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -26,7 +27,7 @@ connection.on(`connected`, () => {
 app.set('view engine', 'ejs');
 
 app.use('/assets', express.static(path.join(__dirname, 'public')));
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

@@ -1,0 +1,398 @@
+<%- include('../layout/adminHeader') %>
+    <div class="flex h-screen bg-neutral-950" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <%- include("../components/admin/desktopSidebar") %>
+            <%- include("../components/admin/mobileSidebar") %>
+                <div class="flex flex-col flex-1 w-full">
+                    <%- include("../components/admin/desktopTopNavbar") %>
+                        <main class="h-full overflow-y-auto font-quicksand">
+                            <div class="container px-2 mx-auto">
+                                <section class="top-16">
+                                    <div class="py-8 px-4 mx-auto lg:py-16">
+                                        <h2 class="mb-4 text-xl font-bold text-white">Edit <%= productDetails.name %></h2>
+                                        <form id="updateProduct" enctype="multipart/form-data">
+                                            <div class="grid lg:grid-cols-2 gap-4 grid-cols-1">
+                                                <div class="space-y-3">
+                                                    <!-- Product Name -->
+                                                    <div>
+                                                        <label for="productName"
+                                                            class="block mb-2 text-sm font-medium text-white">Product Name
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                        <input type="text" id="productName"
+                                                            style="background-color: rgb(39, 39, 39) !important;"
+                                                            class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                            placeholder="Type product name" value="<%= productDetails.name %>">
+                                                    </div>
+                                                    <div class="flex justify-between space-x-4">
+                                                        <!-- Brand -->
+                                                        <div class="w-full">
+                                                            <label for="productBrand"
+                                                                class="block mb-2 text-sm font-medium text-white">Brand
+                                                                <span class="text-red-500 italic">*</span></label>
+                                                            <input type="text" id="productBrand"
+                                                                style="background-color: rgb(39, 39, 39) !important;"
+                                                                class="placeholder-neutral-500 text-sm border-transparent rounded-lg block w-full p-2.5 bg-neutral-800 text-white focus:outline-none"
+                                                                placeholder="Product brand" value="<%= productDetails.brand %>">
+                                                        </div>
+                                                        <!-- Price -->
+                                                        <div class="w-full">
+                                                            <label for="productPrice"
+                                                                class="block mb-2 text-sm font-medium text-white">Price
+                                                                <span class="text-red-500 italic">*</span></label>
+                                                            <input data-input-counter type="text" id="productPrice"
+                                                                style="background-color: rgb(39, 39, 39) !important;"
+                                                                class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                                placeholder="$2999" value="<%= productDetails.price %>">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Category -->
+                                                    <div class="flex justify-between space-x-4">
+                                                        <div class="w-full">
+                                                            <label for="productCategory"
+                                                                class="block mb-2 text-sm font-medium text-white whitespace-nowrap">Category
+                                                                <span class="text-red-500 italic">*</span></label>
+                                                            <select id="productCategory" 
+                                                                class="text-sm border-transparent rounded-lg block w-full p-2.5 bg-neutral-800 text-white focus:outline-none" value="<%= productDetails.category.name%>">                    
+                                                                <% availableCategories.forEach(category => { %>
+                                                                    <option value="<%= category._id%>" <% if (productDetails.category.name === category.name) { %>selected<% } %>><%= category.name %></option>
+                                                                <% }) %>
+                                                            </select>
+                                                        </div>
+                                                        <!-- Quantity -->
+                                                        <div class="w-full">
+                                                            <label for="productQuantity"
+                                                                class="whitespace-nowrap block mb-2 text-sm font-medium text-white">Quantity
+                                                                <span class="text-red-500 italic">*</span></label>
+                                                            <input type="text" data-input-counter id="productQuantity"
+                                                                class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                                style="background-color: rgb(38, 38, 38) !important;"
+                                                                placeholder="12" value="<%= productDetails.quantity %>">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Available Sizes -->
+                                                    <!-- <div>
+                                                        <h3 class="mb-2 text-sm font-medium text-white">Available Sizes:
+                                                            <span class="text-red-500 italic">*</span></h3>
+                                                        <ul class="flex w-full gap-6" id="productSizes">
+                                                            <li>
+                                                                <input type="checkbox" id="sm" value="" class="hidden peer">
+                                                                <label for="sm"
+                                                                    class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                    <span class="text-lg font-semibold">SM</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="md" value="" class="hidden peer">
+                                                                <label for="md"
+                                                                    class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                    <span class="text-lg font-semibold">MD</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="lg" value="" class="hidden peer">
+                                                                <label for="lg"
+                                                                    class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                    <span class="text-lg font-semibold">LG</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="xl" value="" class="hidden peer">
+                                                                <label for="xl"
+                                                                    class="w-12 h-12 border-2 cursor-pointer border-neutral-800 text-sm rounded-full inline-flex items-center justify-center shrink-0 text-white peer-checked:border-blue-600 peer-checked:text-blue-600 bg-neutral-900 hover:bg-neutral-800">
+                                                                    <span class="text-lg font-semibold">XL</span>
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </div> -->
+                                                    <!-- Description -->
+                                                    <div>
+                                                        <label for="productDescription"
+                                                            class="block mb-2 text-sm font-medium text-white">Description
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                        <textarea id="productDescription" rows="8"
+                                                            class="border-transparent block p-2.5 w-full text-sm rounded-lg bg-neutral-800 text-white placeholder-neutral-500 focus:outline-none"
+                                                            style="background-color: rgb(38, 38, 38) !important;"
+                                                            placeholder="Your description here"><%= productDetails.description %></textarea>
+                                                    </div>
+                                                    <!-- Specifications -->
+                                                    <div>
+                                                        <label for="productSpecificationsInput"
+                                                            class="block mb-2 text-sm font-medium text-white">Highlights / Specifications
+                                                            <span class="text-red-500 italic">*</span></label>
+                                                            <div class="flex my-4" id="productSpecList">
+                                                                <% productDetails.specifications.forEach(specification => { %> 
+                                                                    <span class="whitespace-nowrap ml-2 inline-flex items-center rounded h-6 px-2 py-1 text-sm font-medium bg-blue-900 text-blue-300"><%= specification %>
+                                                                        <button class="ms-1 inline-flex items-center rounded-sm bg-transparent p-1 text-sm text-blue-400">
+                                                                            <svg class="h-2 w-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
+                                                                        </button>
+                                                                    </span>
+                                                                <% }) %>
+                                                            </div>
+                                                            <input type="text" id="productSpecificationsInput"
+                                                            class="border-transparent text-sm rounded-lg block w-full p-2.5 bg-neutral-800 placeholder-neutral-500 text-white focus:outline-none"
+                                                            style="background-color: rgb(38, 38, 38) !important;"
+                                                            placeholder="Seperate with coma ( , )">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h3 class="block mb-2 text-sm font-medium text-white">Product Images
+                                                        <span class="text-red-500 italic">*</span></h3>
+                                                    <div class="mb-4 grid grid-cols-3 gap-4 place-items-start lg:grid-cols-4" id="previewContainer">
+                                                        <!-- Preview Container ( Code ) -->
+                                                        <% productDetails.images.forEach(img => { %>
+                                                            <div class="relative rounded-lg bg-neutral-900 p-2 h-36 flex items-center justify-center max-w-full lg:w-36">
+                                                                <img src="/assets/images/products/<%= productDetails._id %>/<%= img %>" class="max-w-full max-h-full" alt="" srcset="" />
+                                                                <button type="button" class="absolute bottom-1 left-1 cursor-pointer bg-transparent text-red-600">
+                                                                    <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        <% }) %>
+                                                    </div>
+                                                    <div id="imageUploadContainer">
+                                                        <label for="images"
+                                                            class="hover:bg-bray-800 flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-700 bg-neutral-800 hover:bg-neutral-700">
+                                                            <div
+                                                                class="flex flex-col items-center justify-center pb-6 pt-5">
+                                                                <svg class="mb-4 h-8 w-8 text-neutral-400"
+                                                                    aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                    viewBox="0 0 20 16">
+                                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="2"
+                                                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                                </svg>
+                                                                <p
+                                                                    class="mb-2 text-center text-sm font-semibold text-neutral-400">
+                                                                    Click to upload</p>
+                                                            </div>
+                                                            <input id="images" type="file" class="hidden" multiple
+                                                                accept="image/*" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit"
+                                                class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800">
+                                                Update "<%= productDetails.name %>"
+                                            </button>
+                                        </form>
+                                    </div>
+                                </section>
+                            </div>
+                        </main>
+                </div>
+    </div>
+    <div  class="bg-black/20 hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" id="modalContainer">
+        <div class="sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+          <div class=" flex flex-col border shadow-sm divide-y divide-neutral-700 rounded-xl pointer-events-auto bg-neutral-800 border-neutral-700 shadow-neutral-700/70">
+            <div class="flex justify-center items-center py-3">
+              <h3 class="font-bold text-white">
+                Crop Image
+              </h3>
+            </div>
+            <div class="p-4 block">
+              <img src="" id="cropperContainer" alt="">
+            </div>
+            <div class="flex justify-end items-center gap-x-2 py-3 px-4">
+              <button type="button" id="cropTheImage"  class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="/assets/js/products/handleImageCrop.js"></script>
+      <script src="/assets/js/products/handleImagePreview.js"></script>
+      <script src="/assets/js/products/imageUploadEvent.js"></script>
+      <script src="/assets/js/products/removeParent.js"></script>
+      <script src="/assets/js/products/modalView.js"></script>
+      <script src="/assets/js/products/convertDataURItoBlob.js"></script>
+      <script src="/assets/js/products/generateRandomString.js"></script>
+      <script src="/assets/js/products/specificationTags.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Preview Container
+            const previewContainer = document.getElementById("previewContainer");
+            // Variables for handling multiple uploads for cropping
+            let totalUploaded = 0;
+            let uploadedImages = [];
+            let croppedImageCount = 0;
+            // Just clone a modal element into a variable and remove it from the page
+            let cropperModal = $("#modalContainer").clone().removeClass('hidden');
+            $("#modalContainer").remove()
+            
+            const productName = $("#productName");
+            const productBrand = $("#productBrand");
+            const productPrice = $("#productPrice");
+            const productCategory = $("#productCategory");
+            const productQuantity = $("#productQuantity");
+            const productDescription = $("#productDescription");
+
+            const imagePreviewTopDiv = $("#imagePreviewTopDiv")
+
+            const imageUploadContainer = $("#imageUploadContainer");
+
+
+            let kew = [
+                productName,
+                productBrand,
+                productPrice,
+                productCategory,
+                productQuantity,
+                productDescription,
+            ];
+            // Image count?
+            $("#images").change(function (e) {
+                $(this).parent('label').removeClass('border-red-500');
+                if ($("#previewContainer").find('img').length >= 2) {
+                    restoreDefault($("#previewContainer"), true)
+                }
+            });
+            // Restore span contents to "*"
+            function restoreDefault(elem, h3 = false) {
+                if (h3) {
+                    elem.siblings('h3').find('span').text('*')
+                } else {
+                    elem.siblings('label').find('span').text('*')
+                }
+                elem.removeClass('border-red-500 placeholder-red-500').addClass('border-transparent');
+            }
+            // On change of input fields
+            $.each(kew, function (indexInArray, valueOfElement) {
+                valueOfElement.on('input', function () {
+                    restoreDefault(valueOfElement)
+                    if (indexInArray === 3) {
+                        valueOfElement.removeClass('text-red-500').addClass('text-white')
+                    }
+                })
+            });
+            // Prevent clicking enter on form field
+            $('#updateProduct').on('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                }
+            });
+            // On submit
+            $("#updateProduct").submit(function (e) {
+                e.preventDefault();
+                // Product Images?
+                let productImageDataArray = [];
+                let productImageExistArray = [];
+                $("#previewContainer div img").each(function () {
+                    let srcVal = $(this).attr('src');
+                    if(srcVal.startsWith('data:image')) {
+                        productImageDataArray.push(srcVal)
+                    } else {
+                        let srcValAr = srcVal.split('/')
+                        productImageExistArray.push(srcValAr[srcValAr.length - 1])
+                    }
+                });
+                // Change "*" to some error message
+                function meCore(val, string, h3 = false) {
+                    if (h3) {
+                        val.siblings('h3').find('span').text(`- ${string}`);
+                    } else {
+                        val.siblings('label').find('span').text(`- ${string}`);
+                    }
+                    val.addClass('border-red-500 placeholder-red-500').removeClass('border-transparent');
+                }
+                // Files? - Convert data-image to a file
+                let productImageFilesArr = [];
+                if(productImageDataArray.length > 0) {
+                    productImageDataArray.forEach(val => {
+                        const blobData = converterDataURItoBlob(val);
+                        console.log(blobData);
+                        const file = new File([blobData], mewa(blobData.type), {type: blobData.type});
+                        console.log(file);
+                        productImageFilesArr.push(file);
+                    });
+                }
+                // variable that validates the procedure
+                let canProceed = true;
+                // No Name?
+                if (!productName.val().trim()) {
+                    meCore(productName, 'cannot be empty!!');
+                    canProceed = false;
+                }
+                // No Brand?
+                if (!productBrand.val().trim()) {
+                    meCore(productBrand, 'Which brand??');
+                    canProceed = false;
+                }
+                // Valid price?
+                if (!productPrice.val().trim() || isNaN(productPrice.val()) || parseFloat(productPrice.val()) <= 0) {
+                    meCore(productPrice, 'Aha, free?');
+                    canProceed = false;
+                }
+                // No category selected?
+                if (!productCategory.val() || !productCategory.val().trim()) {
+                    productCategory.addClass('text-red-500');
+                    productCategory.removeClass('text-white')
+                    meCore(productCategory, 'Unsystematized?')
+                    canProceed = false;
+                }
+                // Valid quantity?
+                if (!productQuantity.val().trim() || isNaN(productQuantity.val()) || parseFloat(productQuantity.val()) <= 0) {
+                    meCore(productQuantity, 'Umm??, empty?')
+                    canProceed = false;
+                }
+                // Description should be atleast 25 words
+                if (!productDescription.val().trim() || productDescription.val().split(' ').length < 25) {
+                    meCore(productDescription, 'Atlest 25 words!')
+                    canProceed = false;
+                };
+                // Images (data-image)
+                if (productImageArray.length < 3) {
+                    meCore($("#previewContainer"), '3 images minimum!', true);
+                    if (productImageArray.length === 0) {
+                        $("#images").parent('label').addClass('border-red-500');
+                    }
+                    canProceed = false;
+                }
+
+                if(canProceed) {
+                    const formData = new FormData()
+                    formData.append('name', productName.val());
+                    formData.append('brand', productBrand.val());
+                    formData.append('price', productPrice.val());
+                    formData.append('category', productCategory.val());
+                    formData.append('quantity', productQuantity.val());
+                    formData.append('description', productDescription.val());
+                    for (let i = 0; i < productImageFilesArr.length; i++) {
+                        formData.append(`images`, productImageFilesArr[i]);
+                    }
+                    for (let i = 0; i < productImageExistArray.length; i++) {
+                        formData.append('existingImages[]', productImageExistArray[i]);
+                    }
+                    // Specifications
+                    $("#productSpecList span").each(function (index, elem) {
+                        formData.append('specifications[]', $(this).text().trim())
+                    });
+                    // Ajax request
+                    $.ajax({
+                        type: "PUT",
+                        url: "/admin/dashboard/products/<%= productDetails._id %>",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Product added succesfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                .then(() => {
+                                    // window.location.href = '/admin/dashboard/products'
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <%- include('../layout/adminFooter') %>

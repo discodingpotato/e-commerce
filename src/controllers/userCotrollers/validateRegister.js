@@ -28,14 +28,10 @@ const validateRegister = async (req, res, next) => {
         return res.redirect('/signup');
     };
     /**
-     * Hash the password
-     */
-    let hashedPassword = bcryptjs.hashSync(password, 10);
-    /**
-     * Create a new user
+     * Create a new user, password hashing is implemented on the schema file
      */
     let newUserData = await User.create({
-        displayName, email, phoneno, password: hashedPassword
+        displayName, email, phoneno, password
     });
     /**
      * Add userId in session

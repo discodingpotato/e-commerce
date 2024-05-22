@@ -8,13 +8,15 @@ const product = require("../../../models/product");
  * @param {import("express").NextFunction} next 
  */
 const loadHomePage = async (req, res, next) => {
+    console.log(req.isAuthenticated())
+    console.log(req.user);
     const products = await product.find({});
-    if(!req.session.userId) {
+    if(!req.isAuthenticated()) {
         return res.render('home', {
             products
         });
     }
-    const userDetails = await User.findById(req.session.userId);
+    let userDetails = req.user;
     res.render('home', {userDetails, products})
 }
 

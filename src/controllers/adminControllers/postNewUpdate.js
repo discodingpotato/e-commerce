@@ -8,7 +8,7 @@ const updates = require("../../models/updates");
  * @param {import("express").NextFunction} next 
  */
 const postNewUpdate = async (req, res, next) => {
-    const { description, what, why, addedPackages } = req.body;
+    const { description, what, why, addedPackages, changes } = req.body;
     let packageDetails = [];
     console.log(req.body);
     for (const pkg of addedPackages) {
@@ -34,10 +34,12 @@ const postNewUpdate = async (req, res, next) => {
 
     console.log(packageDetails);
     await updates.create({
+        date: new Date('2024-05-16T23:00:00'),
         description,
         newPackages: packageDetails,
         what,
-        why
+        why,
+        // changes
     });
 
     res.json({ success: true })

@@ -18,6 +18,18 @@
               <ul class="list-inside pl-2 list-disc space-y-2 pt-2 font-mono font-semibold">
                 <li>What: <%= update.what %></li>
                 <li>Why: <%= update.why %></li>
+                <% if (update.changes && update.changes.length > 0) { %>
+                  <li>
+                    Changes:
+                    <ol class="mt-2 list-inside space-y-1 ps-5 [list-style-type:_circle]">
+                      <% update.changes.forEach(change => { %>
+                        <li>
+                          <%= change %>
+                        </li>
+                      <% }) %>
+                    </ol>
+                  </li>
+                <% } %>
                 <!-- Check if exist? -->
                 <% if (update.newPackages.length > 0) { %>
                   <li>

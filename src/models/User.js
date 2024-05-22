@@ -1,10 +1,11 @@
+const bcryptjs = require('bcryptjs');
 const { Schema, SchemaTypes, model } = require("mongoose");
 
-const schema = new Schema({
+let schema = new Schema({
     displayName: {
         type: SchemaTypes.String,
-        // required: true,
-        // unique: true,
+        required: true,
+        unique: true,
     },
     password: {
         type: SchemaTypes.String,
@@ -33,7 +34,43 @@ const schema = new Schema({
         type: SchemaTypes.Boolean,
         default: false
     },
-    
 }, { timestamps: true });
 
-module.exports = model("User", schema)
+/**
+ * Implementation of password hashing before saving
+ */
+schema.pre('save', async function(next) {
+    try {
+        /**
+         * Generate salt
+         */
+        let salt = await bcryptjs.genSalt(10);
+        /**
+         * Hash the password
+         */
+        let passwordHash = await bcryptjs.hash(this.password, salt);
+        /**
+         * Set the password
+         */
+        this.password = passwordHash;
+        /**
+         * Proceed
+         */
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * valid password check
+ */
+schema.methods.isValidPassword = async function(password) {
+    try {
+        return await bcryptjs.compare(password, this.password);
+    } catch (error) {
+        return false;
+    }
+}
+
+module.exports = model("User", schema);

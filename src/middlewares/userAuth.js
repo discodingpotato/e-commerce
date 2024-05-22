@@ -1,3 +1,4 @@
+const isBlocked = require("../helper/isBlocked");
 const User = require("../models/User");
 
 /**
@@ -7,9 +8,9 @@ const User = require("../models/User");
  * @param {import("express").NextFunction} next 
  */
 const isLogin = async (req, res, next) => {
-    if(req.session.userId) {
-        let userDetails = await User.findById(req.session.userId);
-        if(userDetails && userDetails.isBlocked) {
+    if(req.isAuthenticated()) {
+        const userBlocked = await isBlocked(req.session.userId);
+        if(userBlocked) {
             return res.render('blocked');
         }
         next();

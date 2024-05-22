@@ -1,9 +1,9 @@
-<%- include("../../layout/adminHeader") %>
+<%- include("../layout/adminHeader") %>
     <div class="flex h-screen bg-neutral-950" :class="{ 'overflow-hidden': isSideMenuOpen }">
-        <%- include("../../components/admin/desktopSidebar") %>
-            <%- include("../../components/admin/mobileSidebar") %>
+        <%- include("../components/admin/desktopSidebar") %>
+            <%- include("../components/admin/mobileSidebar") %>
                 <div class="flex flex-col flex-1 w-full">
-                    <%- include("../../components/admin/desktopTopNavbar") %>
+                    <%- include("../components/admin/desktopTopNavbar") %>
                         <main class="h-full overflow-y-auto justify-center items-center flex font-quicksand">
                             <div class="container px-6 mx-auto grid">
                                 <section>
@@ -86,4 +86,4 @@
             });
         });
     </script>
-    <%- include("../../layout/footer") %>
+    <%- include("../layout/footer") %>

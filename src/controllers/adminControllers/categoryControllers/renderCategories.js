@@ -9,7 +9,7 @@ const productCategory = require("../../../models/productCategory")
 const renderCategories = async (req, res, next) => {
     const categories = await productCategory.find({ isDeleted: false });
     console.log();
-    res.render('category/categoryList', {
+    res.render('category-list', {
         categories
     })
 }

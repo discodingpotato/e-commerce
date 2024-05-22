@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <section class="mx-auto max-w-2xl bg-white px-6 py-8">
+        <header>
+          <a href="#">
+            <img class="h-7 w-auto sm:h-8" src="https://merakiui.com/images/full-logo.svg" alt="" />
+          </a>
+        </header>
+        <main class="mt-8">
+          <h2 class="text-gray-700">Hi <%= displayName %>,</h2>
+          <p class="mt-2 leading-loose text-gray-600">This is your verification code:</p>
+          <div class="mt-4 flex items-center gap-x-4 text-2xl font-medium text-blue-500"><%= otp %></div>
+          <p class="mt-8 text-gray-600">
+            Thanks, <br />
+            Mew
+          </p>
+        </main>
+      </section>
+</body>
+</html>

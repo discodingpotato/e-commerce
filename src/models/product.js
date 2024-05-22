@@ -32,12 +32,19 @@ const schema = new Schema({
         type: SchemaTypes.String,
         required: true,
     },
-    is_block: {
-        type: SchemaTypes.Number,
-        default: 0,
+    specifications: [{
+        type: SchemaTypes.String
+    }],
+    isBlocked: {
+        type: SchemaTypes.Boolean,
+        default: false,
+    },
+    isDeleted: {
+        type: SchemaTypes.Boolean,
+        default: false,
     },
 }, {
     timestamps: true,
 });
 
-module.exports = model('Product', schema);
+module.exports = model('product-details', schema);
